@@ -1,0 +1,21 @@
+/***************GENERAL SETTINGS*****************/
+:root {
+  --color1: #004ce5;
+  --color2: #4a80ee;
+  --color3: #003297;
+  --color4: #cecece;
+}
+body {
+  font-family: "Roboto", sans-serif;
+  padding: 0;
+  margin: 0;
+}
+/***************HOME PAGE****************/
+.topbar {
+  background-color: var(--color4);
+  padding: 0.5rem;
+}
+.topbar ul {
+  list-style-type: none;
+  display: flex;
+}
