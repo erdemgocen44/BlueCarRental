@@ -5,6 +5,7 @@
   --color2: #4a80ee;
   --color3: #003297;
   --color4: #cecece;
+  --color5: #363636;
   --color1-transparent-15: rgba(0, 76, 229, 0.15);
 }
 
@@ -98,4 +99,34 @@ body {
 
 .slider .row {
   align-items: center;
+}
+
+/************ SECTION TITLE ************/
+.section-title {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+  align-items: center;
+}
+
+.section-title h2 {
+  font-weight: 900;
+  color: var(--color5);
+}
+
+.section-title span {
+  display: inline-block;
+  width: 10rem;
+  height: 0.4rem;
+  background-color: var(--color1);
+}
+
+/************ CUSTOMER SERVICE CARD ************/
+
+.customer-service-card .icon {
+  color: var(--color2);
+
+  font-size: 4rem;
 }
