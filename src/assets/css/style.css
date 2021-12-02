@@ -150,12 +150,17 @@ body {
   font-size: 1rem;
   font-weight: 700;
   margin-bottom: 1px;
+  cursor: pointer;
 }
 
 .vehicleList li button {
   width: 100%;
   background-color: var(--color1);
   color: white;
+}
+
+.vehicleList li button:disabled {
+  cursor: no-drop;
 }
 
 .vehicleList li:first-child,
@@ -179,4 +184,32 @@ body {
   border-bottom: 10px solid transparent;
   top: 50%;
   transform: translateY(-50%);
+}
+
+.vehilesDropDown .dropdown-menu {
+  width: 100%;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+/************ VEHICLE LIST ************/
+footer {
+  background-color: var(--color1);
+  padding: 2 rem;
+  text-align: center;
+}
+
+footer ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+footer ul li {
+  margin-left: 1rem;
+  margin-right: 1rem;
+  border-bottom: 3px solid var(--color2);
 }

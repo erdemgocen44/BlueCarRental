@@ -1,6 +1,6 @@
 import Button from "@restart/ui/esm/Button";
 import React, { useState } from "react";
-import { Col, Container, Image, Row, Table } from "react-bootstrap";
+import { Col, Container, Image, Row, Table, Dropdown } from "react-bootstrap";
 import { FiCheck, FiChevronDown, FiChevronsUp, FiX } from "react-icons/fi";
 import SectionTitle from "../common/SectionTitle";
 import { vehicleList } from "../../data/vehicleList";
@@ -8,29 +8,64 @@ import { vehicleList } from "../../data/vehicleList";
 const Vehicles = () => {
   const [vehicles, setVehicles] = useState(vehicleList);
   const [activeVehicle, setActiveVehicle] = useState(0);
+  const [startIndex, setStartIndex] = useState(0);
+  const vehicleLength = 5;
+
+  const handleStartIndex = (index) => {
+    if (index < 0 || index > vehicles.length - vehicleLength - 1) return;
+    setStartIndex(index);
+  };
   return (
     <Container>
       <SectionTitle title="Vehicles" />
       <Row>
         <Col lg={3}>
-          <ul className="vehicleList">
+          <Dropdown size="lg" className="d-lg-none">
+            <Dropdown.Toggle className="w-100">
+              {vehicles[activeVehicle].model}
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              {vehicles.map((vehicle, index) => (
+                <Dropdown.Item
+                  key={vehicle.id}
+                  onClick={() => setActiveVehicle(index)}
+                >
+                  {vehicle.model}
+                </Dropdown.Item>
+              ))}
+            </Dropdown.Menu>
+          </Dropdown>
+          <ul className="vehicleList d-none d-lg-block">
             <li>
-              <Button>
+              <Button
+                onClick={() => handleStartIndex(startIndex - 1)}
+                disabled={startIndex <= 0}
+              >
                 <FiChevronsUp />
               </Button>
             </li>
-            {vehicles.map((vehicle, index) => (
-              <li
-                key={vehicle.id}
-                className={index === activeVehicle ? "active" : ""}
-                onClick={() => setActiveVehicle(index)}
-              >
-                {vehicle.model}
-              </li>
-            ))}
+            {vehicles.map((vehicle, index) => {
+              if (index >= startIndex && index <= startIndex + vehicleLength) {
+                return (
+                  <li
+                    key={vehicle.id}
+                    className={index === activeVehicle ? "active" : ""}
+                    onClick={() => setActiveVehicle(index)}
+                  >
+                    {vehicle.model}
+                  </li>
+                );
+              }
+              return null;
+            })}
+
             <li></li>
             <li>
-              <Button>
+              <Button
+                onClick={() => handleStartIndex(startIndex + 1)}
+                disabled={startIndex >= vehicles.length - vehicleLength - 1}
+              >
                 <FiChevronDown />
               </Button>
             </li>
@@ -53,7 +88,7 @@ const Vehicles = () => {
             </thead>
             <tbody>
               <tr>
-                <td>Model</td>
+                <td width="50%">Model</td>
                 <td>{vehicles[activeVehicle].model}</td>
               </tr>{" "}
               <tr>
