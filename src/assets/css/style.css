@@ -130,3 +130,39 @@ body {
 
   font-size: 4rem;
 }
+.customer-service-card .row {
+  text-align: center;
+  align-items: center;
+}
+
+/************ VEHICLE LIST ************/
+
+.vehicleList {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.vehicleList li {
+  background-color: var(--color4);
+  padding: 0.7rem;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 1px;
+}
+
+.vehicleList li button {
+  width: 100%;
+  background-color: var(--color1);
+  color: white;
+}
+
+.vehicleList li:first-child,
+.vehicleList li:last-child {
+  padding: 0;
+}
+
+.vehicleList li.active {
+  background-color: var(--color2);
+}
