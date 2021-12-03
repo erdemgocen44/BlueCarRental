@@ -8,13 +8,15 @@ const PageHeader = ({ title }) => {
       <Container>
         <Row>
           <Col>
-            <h1>{title}</h1>
-            <Breadcrumb>
-              <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>
-                <FiHome /> Home
-              </Breadcrumb.Item>
-              <Breadcrumb.Item active>{title}</Breadcrumb.Item>
-            </Breadcrumb>
+            <div className="header-content">
+              <h1>{title}</h1>
+              <Breadcrumb className="breadcrumb">
+                <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>
+                  <FiHome /> Home
+                </Breadcrumb.Item>
+                <Breadcrumb.Item active>{title}</Breadcrumb.Item>
+              </Breadcrumb>
+            </div>
           </Col>
         </Row>
       </Container>
