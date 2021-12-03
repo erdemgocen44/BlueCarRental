@@ -192,7 +192,7 @@ body {
   overflow-y: auto;
 }
 
-/************ VEHICLE LIST ************/
+/************ FOOTER ************/
 footer {
   background-color: var(--color1);
   padding: 2 rem;
@@ -208,8 +208,28 @@ footer ul {
   margin-bottom: 1rem;
 }
 
-footer ul li {
-  margin-left: 1rem;
-  margin-right: 1rem;
+footer ul li a {
+  margin-left: 2rem;
   border-bottom: 3px solid var(--color2);
+  text-decoration: none;
+  color: var(--color4);
+}
+footer ul li a:hover {
+  color: var(--color5);
+  border-bottom: 3px solid var(--color5);
+}
+
+/************ NEWSLETTER ************/
+.newsletter {
+  background-color: var(--color4);
+  padding: 4rem;
+}
+
+.newsletter .row {
+  justify-content: center;
+  align-items: center;
+}
+
+/************ PAGE HEADER ************/
+.pageHeader {
 }

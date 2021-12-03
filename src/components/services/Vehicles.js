@@ -1,18 +1,23 @@
-import Button from "@restart/ui/esm/Button";
 import React, { useState } from "react";
-import { Col, Container, Image, Row, Table, Dropdown } from "react-bootstrap";
-import { FiCheck, FiChevronDown, FiChevronsUp, FiX } from "react-icons/fi";
+import {
+  Col,
+  Container,
+  Row,
+  Button,
+  Image,
+  Table,
+  Dropdown,
+} from "react-bootstrap";
+import { FiCheck, FiChevronDown, FiChevronUp, FiX } from "react-icons/fi";
 import SectionTitle from "../common/SectionTitle";
 import { vehicleList } from "../../data/vehicleList";
-
 const Vehicles = () => {
   const [vehicles, setVehicles] = useState(vehicleList);
   const [activeVehicle, setActiveVehicle] = useState(0);
   const [startIndex, setStartIndex] = useState(0);
-  const vehicleLength = 5;
-
+  const vehiclesLength = 5;
   const handleStartIndex = (index) => {
-    if (index < 0 || index > vehicles.length - vehicleLength - 1) return;
+    if (index < 0 || index > vehicles.length - vehiclesLength - 1) return;
     setStartIndex(index);
   };
   return (
@@ -20,11 +25,10 @@ const Vehicles = () => {
       <SectionTitle title="Vehicles" />
       <Row>
         <Col lg={3}>
-          <Dropdown size="lg" className="d-lg-none">
+          <Dropdown size="lg" className="d-lg-none vehiclesDropDown">
             <Dropdown.Toggle className="w-100">
               {vehicles[activeVehicle].model}
             </Dropdown.Toggle>
-
             <Dropdown.Menu>
               {vehicles.map((vehicle, index) => (
                 <Dropdown.Item
@@ -42,11 +46,11 @@ const Vehicles = () => {
                 onClick={() => handleStartIndex(startIndex - 1)}
                 disabled={startIndex <= 0}
               >
-                <FiChevronsUp />
+                <FiChevronUp />
               </Button>
             </li>
             {vehicles.map((vehicle, index) => {
-              if (index >= startIndex && index <= startIndex + vehicleLength) {
+              if (index >= startIndex && index <= startIndex + vehiclesLength) {
                 return (
                   <li
                     key={vehicle.id}
@@ -59,12 +63,10 @@ const Vehicles = () => {
               }
               return null;
             })}
-
-            <li></li>
             <li>
               <Button
                 onClick={() => handleStartIndex(startIndex + 1)}
-                disabled={startIndex >= vehicles.length - vehicleLength - 1}
+                disabled={startIndex >= vehicles.length - vehiclesLength - 1}
               >
                 <FiChevronDown />
               </Button>
@@ -82,7 +84,7 @@ const Vehicles = () => {
             <thead>
               <tr>
                 <th colSpan={2}>
-                  <h3>$ {vehicles[activeVehicle].pricePerDay} per day</h3>
+                  <h3>${vehicles[activeVehicle].pricePerDay} per day</h3>
                 </th>
               </tr>
             </thead>
@@ -90,25 +92,25 @@ const Vehicles = () => {
               <tr>
                 <td width="50%">Model</td>
                 <td>{vehicles[activeVehicle].model}</td>
-              </tr>{" "}
+              </tr>
               <tr>
                 <td>Doors</td>
                 <td>{vehicles[activeVehicle].doors}</td>
-              </tr>{" "}
+              </tr>
               <tr>
                 <td>Seats</td>
                 <td>{vehicles[activeVehicle].seats}</td>
-              </tr>{" "}
+              </tr>
               <tr>
                 <td>Luggage</td>
                 <td>{vehicles[activeVehicle].luggage}</td>
-              </tr>{" "}
+              </tr>
               <tr>
                 <td>Transmission</td>
                 <td>{vehicles[activeVehicle].transmission}</td>
-              </tr>{" "}
+              </tr>
               <tr>
-                <td>Air Conditionining</td>
+                <td>Air Conditioning</td>
                 <td>
                   {vehicles[activeVehicle].airConditioning ? (
                     <FiCheck />
@@ -116,15 +118,15 @@ const Vehicles = () => {
                     <FiX />
                   )}
                 </td>
-              </tr>{" "}
+              </tr>
               <tr>
                 <td>Fuel Type</td>
                 <td>{vehicles[activeVehicle].fuelType}</td>
-              </tr>{" "}
+              </tr>
               <tr>
                 <td>Age</td>
                 <td>{vehicles[activeVehicle].age}</td>
-              </tr>
+              </tr>{" "}
             </tbody>
           </Table>
         </Col>
@@ -132,5 +134,4 @@ const Vehicles = () => {
     </Container>
   );
 };
-
 export default Vehicles;
