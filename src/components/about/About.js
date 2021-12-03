@@ -2,12 +2,13 @@ import React from "react";
 import { Col, Container, Image, Row } from "react-bootstrap";
 import about from "../../assets/img/about-us.jpg";
 import signature from "../../assets/img/signature.png";
+
 const About = () => {
   return (
     <Container>
       <Row>
         <Col lg={6}>
-          <Image src={about} className="img-fluid" alt="About Us" />
+          <Image src={about} className="img-fluid" alt="About Us"/>
         </Col>
         <Col lg={6}>
           <h2>What do we offer?</h2>
@@ -31,11 +32,12 @@ const About = () => {
             now and rent a car online today.
           </p>
           <p align="right">
-            <Image src={signature} alt="Signature" />
+              <Image src={signature} alt="Signature"/>
           </p>
         </Col>
       </Row>
     </Container>
   );
 };
+
 export default About;

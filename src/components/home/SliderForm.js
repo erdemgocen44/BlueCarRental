@@ -4,6 +4,7 @@ import { FiCalendar, FiMapPin } from "react-icons/fi";
 import { vehicleList } from "../../data/vehicleList";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+
 const SliderForm = () => {
   const initialValues = {
     car: "",
@@ -14,6 +15,7 @@ const SliderForm = () => {
     dropOffDate: "",
     dropOffTime: "",
   };
+
   const validationSchema = Yup.object({
     car: Yup.string().required("Select a car please."),
     pickUpPlace: Yup.string().required("Enter a pick up place please."),
@@ -23,14 +25,17 @@ const SliderForm = () => {
     dropOffDate: Yup.string().required("Select a drop off date please."),
     dropOffTime: Yup.string().required("Select a drop off time please."),
   });
+
   const onSubmit = (values) => {
     console.log(values);
   };
+
   const formik = useFormik({
     initialValues,
     validationSchema,
     onSubmit,
   });
+
   return (
     <Form noValidate onSubmit={formik.handleSubmit}>
       <Form.Select
@@ -46,8 +51,9 @@ const SliderForm = () => {
           </option>
         ))}
       </Form.Select>
+
       <InputGroup className="mb-3">
-        <InputGroup.Text id="basic-addon1" style={{ flex: 1 }}>
+        <InputGroup.Text id="basic-addon1" style={{ flex: 1 }} >
           <FiMapPin />
           &nbsp;Pick up
         </InputGroup.Text>
@@ -58,6 +64,8 @@ const SliderForm = () => {
           isInvalid={!!formik.errors.pickUpPlace}
         />
       </InputGroup>
+      
+
       <InputGroup className="mb-3">
         <InputGroup.Text id="basic-addon1" style={{ flex: 1 }}>
           <FiMapPin />
@@ -70,6 +78,7 @@ const SliderForm = () => {
           isInvalid={!!formik.errors.dropOffPlace}
         />
       </InputGroup>
+
       <InputGroup className="mb-3">
         <InputGroup.Text id="basic-addon1" style={{ flex: 1 }}>
           <FiCalendar />
@@ -88,6 +97,7 @@ const SliderForm = () => {
           isInvalid={!!formik.errors.pickUpTime}
         />
       </InputGroup>
+
       <InputGroup className="mb-3">
         <InputGroup.Text id="basic-addon1" style={{ flex: 1 }}>
           <FiCalendar />
@@ -106,10 +116,12 @@ const SliderForm = () => {
           isInvalid={!!formik.errors.dropOffTime}
         />
       </InputGroup>
+
       <Button size="lg" className="w-100" type="submit">
         CONTINUE RESERVATION
       </Button>
     </Form>
   );
 };
+
 export default SliderForm;

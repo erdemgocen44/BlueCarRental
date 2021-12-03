@@ -19,16 +19,16 @@ const MenuBar = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            <Nav.Link as={Link} to="/">
+            <Nav.Link  as={Link} to="/">
               <RiHome5Line /> Home
             </Nav.Link>
-            <Nav.Link as={Link} to="/services">
+            <Nav.Link  as={Link} to="/services">
               <RiShape2Fill /> Services
             </Nav.Link>
-            <Nav.Link as={Link} to="/about">
+            <Nav.Link  as={Link} to="/about">
               <RiInformationLine /> About Us
             </Nav.Link>
-            <Nav.Link as={Link} to="/contact">
+            <Nav.Link  as={Link} to="/contact">
               <RiHeadphoneLine /> Contact
             </Nav.Link>
           </Nav>

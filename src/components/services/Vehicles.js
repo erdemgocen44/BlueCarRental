@@ -11,15 +11,18 @@ import {
 import { FiCheck, FiChevronDown, FiChevronUp, FiX } from "react-icons/fi";
 import SectionTitle from "../common/SectionTitle";
 import { vehicleList } from "../../data/vehicleList";
+
 const Vehicles = () => {
   const [vehicles, setVehicles] = useState(vehicleList);
   const [activeVehicle, setActiveVehicle] = useState(0);
   const [startIndex, setStartIndex] = useState(0);
   const vehiclesLength = 5;
+
   const handleStartIndex = (index) => {
     if (index < 0 || index > vehicles.length - vehiclesLength - 1) return;
     setStartIndex(index);
   };
+
   return (
     <Container>
       <SectionTitle title="Vehicles" />
@@ -29,6 +32,7 @@ const Vehicles = () => {
             <Dropdown.Toggle className="w-100">
               {vehicles[activeVehicle].model}
             </Dropdown.Toggle>
+
             <Dropdown.Menu>
               {vehicles.map((vehicle, index) => (
                 <Dropdown.Item
@@ -40,6 +44,7 @@ const Vehicles = () => {
               ))}
             </Dropdown.Menu>
           </Dropdown>
+
           <ul className="vehicleList d-none d-lg-block">
             <li>
               <Button
@@ -63,6 +68,7 @@ const Vehicles = () => {
               }
               return null;
             })}
+
             <li>
               <Button
                 onClick={() => handleStartIndex(startIndex + 1)}
@@ -126,7 +132,7 @@ const Vehicles = () => {
               <tr>
                 <td>Age</td>
                 <td>{vehicles[activeVehicle].age}</td>
-              </tr>{" "}
+              </tr> 
             </tbody>
           </Table>
         </Col>
@@ -134,4 +140,5 @@ const Vehicles = () => {
     </Container>
   );
 };
+
 export default Vehicles;

@@ -4,6 +4,7 @@ import Slider from "../components/home/Slider";
 import CustomerServices from "../components/services/CustomerServices";
 import Vehicles from "../components/services/Vehicles";
 import Spacer from "../components/common/Spacer";
+
 const HomePage = () => {
   return (
     <>
@@ -18,4 +19,5 @@ const HomePage = () => {
     </>
   );
 };
+
 export default HomePage;

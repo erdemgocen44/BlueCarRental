@@ -7,14 +7,14 @@ const Slider = () => {
   return (
     <div className="slider">
       <Container>
-        <Row>
-          <Col lg={{ span: 7, order: "last" }}>
-            <SliderCarousel />
-          </Col>
-          <Col lg={{ span: 5, order: "first" }}>
-            <SliderForm />
-          </Col>
-        </Row>
+          <Row>
+              <Col lg={{span:7, order:"last"}}>
+                    <SliderCarousel/>
+              </Col>
+              <Col lg={{span:5, order:"first"}}>
+                    <SliderForm/> 
+              </Col>
+          </Row>
       </Container>
     </div>
   );

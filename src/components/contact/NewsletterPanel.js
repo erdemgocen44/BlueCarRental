@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  Container,
-  Row,
-  Col,
-  Form,
-  InputGroup,
-  FormControl,
-  Button,
-} from "react-bootstrap";
+import { Container, Row, Col, Form, InputGroup, FormControl, Button } from "react-bootstrap";
 
 const NewsletterPanel = () => {
   return (
@@ -30,7 +22,9 @@ const NewsletterPanel = () => {
                   aria-label="Recipient's username"
                   aria-describedby="basic-addon2"
                 />
-                <Button>Subscribe</Button>
+                <Button>
+                  Subscribe
+                </Button>
               </InputGroup>
             </Form>
           </Col>
