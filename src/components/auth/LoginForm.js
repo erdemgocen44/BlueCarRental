@@ -10,6 +10,7 @@ import {
 } from "react-bootstrap";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { Link } from "react-router-dom";
 const LoginForm = () => {
   const [loading, setLoading] = useState(false);
 
@@ -58,9 +59,18 @@ const LoginForm = () => {
                     {formik.errors.password}
                   </Form.Control.Feedback>
                 </Form.Group>
-                <Button variant="primary" type="submit" disabled={loading}>
-                  {loading && <Spinner animation="border" size="sm" />} Login
-                </Button>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <Button variant="primary" type="submit" disabled={loading}>
+                    {loading && <Spinner animation="border" size="sm" />} Login
+                  </Button>
+                  <Link to="/register">Create New User</Link>
+                </div>
               </Form>
             </Card.Body>
           </Card>
