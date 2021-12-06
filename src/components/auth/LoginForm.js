@@ -10,10 +10,15 @@ import {
 } from "react-bootstrap";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { getUser, login } from "../../api/user-service";
+import { toast } from "react-toastify";
+import { useStore } from "../../store";
+import { loginFailed, loginSuccess } from "../../store/user/userActions";
 const LoginForm = () => {
   const [loading, setLoading] = useState(false);
-
+  const { dispatchUser } = useStore();
+  const navigate = useNavigate();
   const initialValues = {
     email: "",
     password: "",
@@ -23,7 +28,27 @@ const LoginForm = () => {
     password: Yup.string().required("Please enter your password"),
   });
   const onSubmit = (values) => {
-    console.log(values);
+    setLoading(true);
+    login(values)
+      .then((respLogin) => {
+        localStorage.setItem("token", respLogin.data.token);
+        getUser()
+          .then((respUser) => {
+            console.log(respUser);
+            dispatchUser(loginSuccess(respUser.data));
+            navigate("/");
+            setLoading(false);
+          })
+          .catch((err) => {
+            toast(err.response.data.message);
+            setLoading(false);
+            dispatchUser(loginFailed());
+          });
+      })
+      .catch((err) => {
+        toast(err.response.data.message);
+        setLoading(false);
+      });
   };
   const formik = useFormik({
     initialValues,
@@ -69,7 +94,7 @@ const LoginForm = () => {
                   <Button variant="primary" type="submit" disabled={loading}>
                     {loading && <Spinner animation="border" size="sm" />} Login
                   </Button>
-                  <Link to="/register">Create New User</Link>
+                  <Link to="/register">Create new user</Link>
                 </div>
               </Form>
             </Card.Body>

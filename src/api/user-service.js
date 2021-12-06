@@ -1,9 +1,9 @@
 import axios from "axios";
+import authHeader from "./auth-header";
 const API_URL = process.env.REACT_APP_API_URL;
-const login = (email, password) => {
+const login = (credentials) => {
   return axios.post(`${API_URL}login`, {
-    email,
-    password,
+    credentials,
   });
 };
 
@@ -11,4 +11,7 @@ const register = (user) => {
   return axios.post(`${API_URL}register`, user);
 };
 
-export { login, register };
+const getUser = () => {
+  return axios.get(`${API_URL}user`, { headers: authHeader });
+};
+export { login, register, getUser };
