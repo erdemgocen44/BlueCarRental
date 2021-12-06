@@ -1,18 +1,19 @@
-//!User ile alakalı statei değiştirecek metodlar tanımlanır
+/* User ile alakalı state i değiştirecek metodlar tanımlanır */
+
 import { types } from "../types";
 
-//!Userin basarılı sekilde giriş yapması durumunda çağrılır
+/* User ın başarılı şekilde giriş yapması durumunda çağrılır */
 export const loginSuccess = (user) => ({
   type: types.LOGIN_SUCCESS,
   payload: user,
 });
-//!Userin basarılı giriş yapılmmaması durumunda çağrılır
 
+/* User ın başarısız login girişimlerinde çağrılır */
 export const loginFailed = () => ({
   type: types.LOGIN_FAILED,
 });
-//!Userin basarılı sekilde çıkış yapması durumunda çağrılır
 
+/* User ın logout işleminde çağrılır */
 export const logout = () => ({
   type: types.LOGOUT,
 });

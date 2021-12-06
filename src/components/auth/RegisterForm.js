@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import MaskInput from "react-maskinput";
-import { toast } from "react-toastify";
 import {
   Container,
   Row,
@@ -12,11 +10,15 @@ import {
 } from "react-bootstrap";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import MaskInput from "react-maskinput/lib";
 import { register } from "../../api/user-service";
-import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+
 const RegisterForm = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
   const initialValues = {
     firstName: "",
     lastName: "",
@@ -27,17 +29,13 @@ const RegisterForm = () => {
     password: "",
     confirmPassword: "",
   };
+
   const validationSchema = Yup.object({
     firstName: Yup.string().required("Please enter your first name"),
     lastName: Yup.string().required("Please enter your last name"),
     email: Yup.string().email().required("Please enter your email"),
-    phoneNumber: Yup.string()
-      .required("Please enter your phone number")
-      .test(
-        "includes_",
-        "Please enter a valid phone number",
-        (value) => value && !value.includes("_")
-      ),
+    phoneNumber: Yup.string().required("Please enter your phone number")
+      .test("includes_","Please enter a valid phone number", (value)=> value && !value.includes("_") ),
     address: Yup.string().required("Please enter your address"),
     zipCode: Yup.string().required("Please enter your zip code"),
     password: Yup.string().required("Please enter your password"),
@@ -45,26 +43,31 @@ const RegisterForm = () => {
       .required("Please enter your password again")
       .oneOf([Yup.ref("password")], "Password fields don`t match"),
   });
+
   const onSubmit = (values) => {
     console.log(values);
 
     setLoading(true);
-    register(values)
-      .then((resp) => {
-        setLoading(false);
-        toast("You are registered succesfuly");
-        navigate("login");
-      })
-      .catch((err) => {
-        setLoading(false);
-        toast(err.response.data.message);
-      });
+
+    register(values).then(resp=>{
+      setLoading(false);
+      toast("You are registered successfully. ");
+      navigate("/login");
+    })
+    .catch(err=> {
+      console.log("Hata oluştu");
+      setLoading(false);
+      toast(err.response.data.message);
+    })
+
   };
+
   const formik = useFormik({
     initialValues,
     validationSchema,
     onSubmit,
   });
+
   return (
     <Container>
       <Row>
@@ -83,6 +86,7 @@ const RegisterForm = () => {
                     {formik.errors.firstName}
                   </Form.Control.Feedback>
                 </Form.Group>
+
                 <Form.Group className="mb-3">
                   <Form.Label>Last Name</Form.Label>
                   <Form.Control
@@ -94,6 +98,7 @@ const RegisterForm = () => {
                     {formik.errors.lastName}
                   </Form.Control.Feedback>
                 </Form.Group>
+
                 <Form.Group className="mb-3">
                   <Form.Label>Phone Number</Form.Label>
                   <Form.Control
@@ -102,13 +107,14 @@ const RegisterForm = () => {
                     isInvalid={!!formik.errors.phoneNumber}
                     as={MaskInput}
                     maskChar="_"
-                    mask="(000) 000-00-00"
+                    mask="(000) 000-0000"
                     alwaysShowMask
                   />
                   <Form.Control.Feedback type="invalid">
                     {formik.errors.phoneNumber}
                   </Form.Control.Feedback>
                 </Form.Group>
+
                 <Form.Group className="mb-3">
                   <Form.Label>Address</Form.Label>
                   <Form.Control
@@ -120,6 +126,7 @@ const RegisterForm = () => {
                     {formik.errors.address}
                   </Form.Control.Feedback>
                 </Form.Group>
+
                 <Form.Group className="mb-3">
                   <Form.Label>Zip Code</Form.Label>
                   <Form.Control
@@ -131,7 +138,9 @@ const RegisterForm = () => {
                     {formik.errors.zipCode}
                   </Form.Control.Feedback>
                 </Form.Group>
+
                 <hr />
+
                 <Form.Group className="mb-3">
                   <Form.Label>Email</Form.Label>
                   <Form.Control
@@ -143,6 +152,7 @@ const RegisterForm = () => {
                     {formik.errors.email}
                   </Form.Control.Feedback>
                 </Form.Group>
+
                 <Form.Group className="mb-3">
                   <Form.Label>Password</Form.Label>
                   <Form.Control
@@ -154,6 +164,7 @@ const RegisterForm = () => {
                     {formik.errors.password}
                   </Form.Control.Feedback>
                 </Form.Group>
+
                 <Form.Group className="mb-3">
                   <Form.Label>Password (Confirm)</Form.Label>
                   <Form.Control
@@ -165,6 +176,7 @@ const RegisterForm = () => {
                     {formik.errors.confirmPassword}
                   </Form.Control.Feedback>
                 </Form.Group>
+
                 <Button variant="primary" type="submit" disabled={loading}>
                   {loading && <Spinner animation="border" size="sm" />} Register
                 </Button>
@@ -176,4 +188,5 @@ const RegisterForm = () => {
     </Container>
   );
 };
+
 export default RegisterForm;

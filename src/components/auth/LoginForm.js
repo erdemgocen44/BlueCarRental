@@ -15,46 +15,55 @@ import { getUser, login } from "../../api/user-service";
 import { toast } from "react-toastify";
 import { useStore } from "../../store";
 import { loginFailed, loginSuccess } from "../../store/user/userActions";
+
 const LoginForm = () => {
   const [loading, setLoading] = useState(false);
   const { dispatchUser } = useStore();
   const navigate = useNavigate();
+
   const initialValues = {
     email: "",
     password: "",
   };
+
   const validationSchema = Yup.object({
     email: Yup.string().email().required("Please enter your email"),
     password: Yup.string().required("Please enter your password"),
   });
+
   const onSubmit = (values) => {
     setLoading(true);
+
     login(values)
       .then((respLogin) => {
         localStorage.setItem("token", respLogin.data.token);
-        getUser()
-          .then((respUser) => {
-            console.log(respUser);
-            dispatchUser(loginSuccess(respUser.data));
-            navigate("/");
-            setLoading(false);
-          })
-          .catch((err) => {
-            toast(err.response.data.message);
-            setLoading(false);
-            dispatchUser(loginFailed());
-          });
+
+        getUser().then((respUser) => {
+          console.log(respUser);
+          dispatchUser(loginSuccess(respUser.data));
+          navigate("/");
+          setLoading(false);
+        })
+        .catch(err=> {
+          toast(err.response.data.message);
+          setLoading(false);
+          dispatchUser(loginFailed());
+        })
+
+        
       })
       .catch((err) => {
         toast(err.response.data.message);
         setLoading(false);
       });
   };
+
   const formik = useFormik({
     initialValues,
     validationSchema,
     onSubmit,
   });
+
   return (
     <Container>
       <Row>
@@ -73,6 +82,7 @@ const LoginForm = () => {
                     {formik.errors.email}
                   </Form.Control.Feedback>
                 </Form.Group>
+
                 <Form.Group className="mb-3" controlId="formBasicPassword">
                   <Form.Label>Password</Form.Label>
                   <Form.Control
@@ -84,6 +94,7 @@ const LoginForm = () => {
                     {formik.errors.password}
                   </Form.Control.Feedback>
                 </Form.Group>
+
                 <div
                   style={{
                     display: "flex",
@@ -94,6 +105,7 @@ const LoginForm = () => {
                   <Button variant="primary" type="submit" disabled={loading}>
                     {loading && <Spinner animation="border" size="sm" />} Login
                   </Button>
+
                   <Link to="/register">Create new user</Link>
                 </div>
               </Form>
@@ -104,4 +116,5 @@ const LoginForm = () => {
     </Container>
   );
 };
+
 export default LoginForm;

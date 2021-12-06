@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Container,
-  Row,
-  Col,
-  Button,
-  DropdownButton,
-  Dropdown,
-} from "react-bootstrap";
+import { Container, Row, Col, Button, DropdownButton, Dropdown } from "react-bootstrap";
 import {
   FiFacebook,
   FiInstagram,
@@ -18,14 +11,17 @@ import {
 import { Link } from "react-router-dom";
 import { useStore } from "../../store";
 import { logout } from "../../store/user/userActions";
+
 const TopBar = () => {
   const { userState, dispatchUser } = useStore();
   const { user, isUserLogin } = userState;
 
+
   const handleLogout = () => {
     dispatchUser(logout());
     localStorage.removeItem("token");
-  };
+  }
+  
 
   return (
     <div className="topbar">
@@ -57,23 +53,10 @@ const TopBar = () => {
                     size="sm"
                     align="end"
                   >
-                    <Dropdown.Item
-                      as={Link}
-                      to="/rezervations"
-                      href="#/action-1"
-                    >
-                      Rezervations
-                    </Dropdown.Item>
-                    <Dropdown.Item as={Link} to="/profile" href="#/action-1">
-                      Profile
-                    </Dropdown.Item>
-                    <Dropdown.Item
-                      onClick={handleLogout}
-                      to="/logout"
-                      href="#/action-1"
-                    >
-                      Logout
-                    </Dropdown.Item>
+                    <Dropdown.Item as={Link} to="/reservations">Reservations</Dropdown.Item>
+                    <Dropdown.Item as={Link} to="/profile">Profile</Dropdown.Item>
+                    <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
+                    
                   </DropdownButton>
                 ) : (
                   <Button as={Link} size="sm" to="/login">
@@ -88,4 +71,5 @@ const TopBar = () => {
     </div>
   );
 };
+
 export default TopBar;
