@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import MaskInput from "react-maskinput";
+import { toast } from "react-toastify";
 import {
   Container,
   Row,
@@ -11,8 +12,11 @@ import {
 } from "react-bootstrap";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { register } from "../../api/user-service";
+import { useNavigate } from "react-router";
 const RegisterForm = () => {
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const initialValues = {
     firstName: "",
     lastName: "",
@@ -27,7 +31,13 @@ const RegisterForm = () => {
     firstName: Yup.string().required("Please enter your first name"),
     lastName: Yup.string().required("Please enter your last name"),
     email: Yup.string().email().required("Please enter your email"),
-    phoneNumber: Yup.string().required("Please enter your phone number"),
+    phoneNumber: Yup.string()
+      .required("Please enter your phone number")
+      .test(
+        "includes_",
+        "Please enter a valid phone number",
+        (value) => value && !value.includes("_")
+      ),
     address: Yup.string().required("Please enter your address"),
     zipCode: Yup.string().required("Please enter your zip code"),
     password: Yup.string().required("Please enter your password"),
@@ -37,6 +47,18 @@ const RegisterForm = () => {
   });
   const onSubmit = (values) => {
     console.log(values);
+
+    setLoading(true);
+    register(values)
+      .then((resp) => {
+        setLoading(false);
+        toast("You are registered succesfuly");
+        navigate("login");
+      })
+      .catch((err) => {
+        setLoading(false);
+        toast(err.response.data.message);
+      });
   };
   const formik = useFormik({
     initialValues,
