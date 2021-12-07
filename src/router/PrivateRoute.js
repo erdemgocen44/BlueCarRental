@@ -1,10 +1,14 @@
 import React from "react";
-import { useStore } from "../../store";
+import { Navigate } from "react-router";
+import { useStore } from "../store";
 
 const PrivateRoute = ({ children }) => {
   const { userState } = useStore();
   const { isUserLogin } = userState;
-  return <div></div>;
+
+  if (!isUserLogin) return <Navigate to="/login" />;
+
+  return children;
 };
 
 export default PrivateRoute;
