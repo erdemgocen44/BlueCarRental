@@ -22,8 +22,8 @@ const LoginForm = () => {
   const navigate = useNavigate();
 
   const initialValues = {
-    email: "",
-    password: "",
+    email: "erdemm@gmail.com",
+    password: "12345",
   };
 
   const validationSchema = Yup.object({
@@ -38,19 +38,18 @@ const LoginForm = () => {
       .then((respLogin) => {
         localStorage.setItem("token", respLogin.data.token);
 
-        getUser().then((respUser) => {
-          console.log(respUser);
-          dispatchUser(loginSuccess(respUser.data));
-          navigate("/");
-          setLoading(false);
-        })
-        .catch(err=> {
-          toast(err.response.data.message);
-          setLoading(false);
-          dispatchUser(loginFailed());
-        })
-
-        
+        getUser()
+          .then((respUser) => {
+            console.log(respUser);
+            dispatchUser(loginSuccess(respUser.data));
+            navigate("/");
+            setLoading(false);
+          })
+          .catch((err) => {
+            toast(err.response.data.message);
+            setLoading(false);
+            dispatchUser(loginFailed());
+          });
       })
       .catch((err) => {
         toast(err.response.data.message);
