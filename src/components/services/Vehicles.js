@@ -11,20 +11,27 @@ import {
 import { FiCheck, FiChevronDown, FiChevronUp, FiX } from "react-icons/fi";
 import { useStore } from "../../store";
 import SectionTitle from "../common/SectionTitle";
+
+
 const Vehicles = () => {
   const { vehiclesState } = useStore();
   const { vehicles } = vehiclesState;
-  console.log(vehicles);
 
+  console.log(vehicles);
+  
   const [activeVehicle, setActiveVehicle] = useState(0);
   const [startIndex, setStartIndex] = useState(0);
   const vehiclesLength = 5;
+
   const handleStartIndex = (index) => {
     if (index < 0 || index > vehicles.length - vehiclesLength - 1) return;
     setStartIndex(index);
   };
+
   return (
+     
     <Container>
+
       <SectionTitle title="Vehicles" />
       <Row>
         <Col lg={3}>
@@ -32,6 +39,7 @@ const Vehicles = () => {
             <Dropdown.Toggle className="w-100">
               {vehicles[activeVehicle].model}
             </Dropdown.Toggle>
+
             <Dropdown.Menu>
               {vehicles.map((vehicle, index) => (
                 <Dropdown.Item
@@ -43,6 +51,7 @@ const Vehicles = () => {
               ))}
             </Dropdown.Menu>
           </Dropdown>
+
           <ul className="vehicleList d-none d-lg-block">
             <li>
               <Button
@@ -66,6 +75,7 @@ const Vehicles = () => {
               }
               return null;
             })}
+
             <li>
               <Button
                 onClick={() => handleStartIndex(startIndex + 1)}
@@ -78,8 +88,8 @@ const Vehicles = () => {
         </Col>
         <Col lg={6}>
           <Image
-            src={`${process.env.REACT_APP_API_URL}files/display/${vehicles[activeVehicle].image[0]}`}
-            className="img-fluid"
+          src={`${process.env.REACT_APP_API_URL}files/display/${vehicles[activeVehicle].image[0]}`}
+          className="img-fluid"
           />
         </Col>
         <Col lg={3}>
@@ -129,12 +139,14 @@ const Vehicles = () => {
               <tr>
                 <td>Age</td>
                 <td>{vehicles[activeVehicle].age}</td>
-              </tr>
+              </tr> 
             </tbody>
           </Table>
         </Col>
       </Row>
     </Container>
+    
   );
 };
+
 export default Vehicles;

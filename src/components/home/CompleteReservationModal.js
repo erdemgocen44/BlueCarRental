@@ -31,7 +31,7 @@ const CompleteReservationModal = (props) => {
 
   const vehicleImageId =
     reservation &&
-    vehicles.filter((vehicle) => vehicle.id == reservation.car)[0].image[0].id;
+    vehicles.filter((vehicle) => vehicle.id == reservation.car)[0].image[0];
 
   const initialValues = {
     cardNo: "",
@@ -52,7 +52,27 @@ const CompleteReservationModal = (props) => {
     ),
   });
 
-  const onSubmit = () => {};
+  const onSubmit = (values) => {
+    setLoading(true);
+
+    const reservationDto = {
+      car: reservation.car,
+      pickUpLocation: reservation.pickUpLocation,
+      dropOfLocation: reservation.dropOfLocation,
+      pickUpTime: moment(`${reservation.pickUpDate} ${reservation.pickUpTime}`).format("MM/DD/YYYY hh:mm:ss"),
+      dropOfTime: moment(`${reservation.dropOffDate} ${reservation.dropOffTime}`).format("MM/DD/YYYY hh:mm:ss"),
+  } 
+
+    createReservation(reservationDto).then(resp=> {
+      setLoading(false);
+      toast("Reservation created successfully");
+    })
+    .catch(err=>{
+      setLoading(false);
+      toast("An error occured, please try later");
+    })
+
+  };
 
   const formik = useFormik({
     initialValues,
@@ -72,7 +92,7 @@ const CompleteReservationModal = (props) => {
               <Col lg={6}>
                 <h5>Vehicle</h5>
                 <Image
-                  src={`${process.env.REACT_APP_API_URL}files/${vehicleImageId}`}
+                  src={`${process.env.REACT_APP_API_URL}files/display/${vehicleImageId}`}
                   className="img-fluid"
                 />
               </Col>

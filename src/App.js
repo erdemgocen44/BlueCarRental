@@ -11,38 +11,45 @@ import CustomRoutes from "./router/CustomRoutes";
 import { useStore } from "./store";
 import { loginSuccess } from "./store/user/userActions";
 import { setVehiclesInStore } from "./store/vehicles/vehiclesActions";
+
 const App = () => {
   const [loading, setLoading] = useState(true);
   const { dispatchUser, dispatchVehicles } = useStore();
+
   const loadData = async () => {
+ 
     try {
       /**** LOAD USER ****/
       const respUser = await getUser();
       if (respUser.status !== 200) throw "An error occured whlie getting user";
       dispatchUser(loginSuccess(respUser.data));
+
       /**** LOAD VEHICLES ****/
       const respVehicles = await getVehicles();
-      if (respVehicles.status !== 200)
-        throw "An error occured whlie getting vehicles";
+      if(respVehicles.status !==200) throw "An error occured whlie getting vehicles";
       dispatchVehicles(setVehiclesInStore(respVehicles.data));
       setLoading(false);
+
     } catch (error) {
       console.log(error);
     }
   };
+
   useEffect(() => {
     loadData();
   }, []);
-  if (loading) return <LoadingPage />;
+
+  if(loading) return(<LoadingPage/>)
   else
-    return (
-      <BrowserRouter>
-        <TopBar />
-        <MenuBar />
-        <CustomRoutes />
-        <Footer />
-        <ToastContainer />
-      </BrowserRouter>
-    );
+  return (
+    <BrowserRouter>
+      <TopBar />
+      <MenuBar />
+      <CustomRoutes />
+      <Footer />
+      <ToastContainer />
+    </BrowserRouter>
+  )
 };
+
 export default App;
