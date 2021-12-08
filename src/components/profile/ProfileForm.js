@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import * as Yup from "yup";
-import { useFormik } from "formik";
-import { Form, Button, Spinner } from "react-bootstrap";
-import { updateUser } from "../../api/user-service";
-import MaskInput from "react-maskinput/lib";
 import { toast } from "react-toastify";
+import { useFormik } from "formik";
+import { Form,Button, Spinner } from "react-bootstrap";
+import MaskInput from "react-maskinput/lib";
+import { updateUser } from "../../api/user-service";
 
 const ProfileForm = ({ user }) => {
   const [loading, setLoading] = useState(false);
-  console.log(user);
 
-  const initialValues =
+  const initialValues = user;
+
+  /*
     Object.keys(user).length > 0
       ? user
       : {
@@ -21,7 +22,7 @@ const ProfileForm = ({ user }) => {
           address: "",
           zipCode: "",
         };
-
+*/
   const validationSchema = Yup.object({
     firstName: Yup.string().required("Please enter your first name"),
     lastName: Yup.string().required("Please enter your last name"),
@@ -33,19 +34,20 @@ const ProfileForm = ({ user }) => {
 
   const onSubmit = (values) => {
     console.log(values);
+
     delete values["roles"];
 
     setLoading(true);
-    updateUser(values)
-      .then((resp) => {
-        toast("Your profile updated successfully");
-        setLoading(false);
-      })
-      .catch((err) => {
-        toast("An error occured. Please try later.");
-        console.log(err.response.data.message);
-        setLoading(false);
-      });
+    updateUser(values).then(resp=>{
+      toast("Your profile updated successfully");
+      setLoading(false);
+    })
+    .catch(err=>{
+      toast("An error occured. Please try later.");
+      console.log(err.response.data.message);
+      setLoading(false);
+    })
+
   };
 
   const formik = useFormik({
@@ -89,9 +91,9 @@ const ProfileForm = ({ user }) => {
           type="text"
           placeholder="Enter phone number"
           as={MaskInput}
-          alwaysShowMask
-          maskChar="_"
-          mask="(000) 000-0000"
+            alwaysShowMask
+            maskChar="_"
+            mask="(000) 000-0000"
           {...formik.getFieldProps("phoneNumber")}
           isInvalid={!!formik.errors.phoneNumber}
         />
@@ -122,6 +124,7 @@ const ProfileForm = ({ user }) => {
           {formik.errors.address}
         </Form.Control.Feedback>
       </Form.Group>
+
 
       <Form.Group className="mb-3">
         <Form.Label>Zip Code</Form.Label>

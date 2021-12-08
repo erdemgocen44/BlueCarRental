@@ -33,7 +33,7 @@ const TopBar = () => {
                 <FiInstagram />
               </li>
               <li>
-                <UserMenu />
+                <UserMenu/>
               </li>
             </ul>
           </Col>
@@ -42,4 +42,5 @@ const TopBar = () => {
     </div>
   );
 };
+
 export default TopBar;

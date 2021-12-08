@@ -12,16 +12,7 @@ import PrivateRoute from "./PrivateRoute";
 const CustomRoutes = () => {
   return (
     <Routes>
-      <Route
-        path="/profile"
-        element={
-          <PrivateRoute>
-            {" "}
-            <ProfilePage />
-          </PrivateRoute>
-        }
-      />
-
+      <Route path="/profile" element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
       <Route path="/contact" element={<ContactPage />} />
       <Route path="/about" element={<AboutPage />} />
       <Route path="/services" element={<ServicesPage />} />

@@ -3,26 +3,36 @@ import { Link, useNavigate } from "react-router-dom";
 import { useStore } from "../../store";
 import { logout } from "../../store/user/userActions";
 import { Button, DropdownButton, Dropdown } from "react-bootstrap";
-import { FiUser } from "react-icons/fi";
+import {
+  FiUser,
+} from "react-icons/fi";
 import alertify from "alertifyjs";
+
+
 const UserMenu = () => {
   const { userState, dispatchUser } = useStore();
   const { user, isUserLogin } = userState;
   const navigate = useNavigate();
+
   const handleLogout = () => {
     alertify.confirm(
-      "Logout",
-      "Are you sure want to logout?",
-      () => {
-        dispatchUser(logout());
-        localStorage.removeItem("token");
-        navigate("/");
-      },
-      () => {
-        console.log("canceled");
-      }
-    );
+        "Logout",
+        "Are you sure want to logout?",
+        () => {
+            dispatchUser(logout());
+            localStorage.removeItem("token");
+            navigate("/");
+
+        },
+        () => {
+            console.log("canceled");
+        }
+    )
+
+
+    
   };
+
   return (
     <>
       {isUserLogin ? (
@@ -48,4 +58,5 @@ const UserMenu = () => {
     </>
   );
 };
+
 export default UserMenu;

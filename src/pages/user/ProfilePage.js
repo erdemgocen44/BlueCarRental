@@ -6,12 +6,15 @@ import Spacer from "../../components/common/Spacer";
 import PasswordForm from "../../components/profile/PasswordForm";
 import ProfileForm from "../../components/profile/ProfileForm";
 import { useStore } from "../../store";
+
 const ProfilePage = () => {
   const { userState } = useStore();
   const { user } = userState;
+
   return (
     <>
       <PageHeader title="Profile" />
+
       <Spacer />
       <Container>
         <Row>
@@ -25,11 +28,13 @@ const ProfilePage = () => {
           <Col md={1}></Col>
           <Col md={4} className="mt-5 mt-md-0">
             <h3>Profile</h3>
+
             <ProfileForm user={user} />
           </Col>
           <Col md={1}></Col>
           <Col md={4} className="mt-5 mt-md-0">
             <h3>Update Password</h3>
+
             <PasswordForm />
           </Col>
         </Row>
@@ -38,4 +43,5 @@ const ProfilePage = () => {
     </>
   );
 };
+
 export default ProfilePage;

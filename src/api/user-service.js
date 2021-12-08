@@ -16,13 +16,14 @@ const getUser = () => {
 };
 
 const updateUser = (user) => {
-  return axios.put(`${API_URL}user`, user, { headers: authHeader() });
-};
+  return axios.put(`${API_URL}user`, user, { headers: authHeader() })
+}
 
 const updatePassword = (credentials) => {
-  return axios.patch(`${API_URL}user`, credentials, { headers: authHeader() });
-};
+  return axios.patch(`${API_URL}user/auth`, credentials, { headers: authHeader() })
+}
 
-//https://car-rental-x.herokuapp.com/car-rental/api/user
+
+//https://car-rental-x.herokuapp.com/car-rental/api/
 
 export { login, register, getUser, updateUser, updatePassword };

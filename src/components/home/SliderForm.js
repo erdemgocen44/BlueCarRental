@@ -1,16 +1,17 @@
 import React from "react";
 import { Form, InputGroup, FormControl, Button } from "react-bootstrap";
 import { FiCalendar, FiMapPin } from "react-icons/fi";
-import { vehicleList } from "../../data/vehicleList";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import CompleteReservationModal from "./CompleteReservationModal";
-import { useStore } from "../../store";
-import { setReservationState } from "../../store/reservation/reservationActions";
+import {useStore} from "../../store";
+import {setReservationState} from "../../store/reservation/reservationActions";
 
 const SliderForm = () => {
-  const { dispatchReservation } = useStore;
+  const { dispatchReservation, vehiclesState  } = useStore();
+  const { vehicles } = vehiclesState;
   const [modalShow, setModalShow] = React.useState(false);
+
   const initialValues = {
     car: "",
     pickUpPlace: "",
@@ -33,9 +34,11 @@ const SliderForm = () => {
 
   const onSubmit = (values) => {
     console.log(values);
-    //!Aracın belirtilen tarih aralığında müsait olup olmadığı kontrol edilmeli
+
+    // Aracın belirtilen tarih aralığında müsait olup olmadığı kontrol edilmeli
 
     dispatchReservation(setReservationState(values));
+
     setModalShow(true);
   };
 
@@ -54,7 +57,7 @@ const SliderForm = () => {
         isInvalid={!!formik.errors.car}
       >
         <option>Select a car</option>
-        {vehicleList.map((vehicle) => (
+        {vehicles.map((vehicle) => (
           <option value={vehicle.id} key={vehicle.id}>
             {vehicle.model}
           </option>
@@ -62,7 +65,7 @@ const SliderForm = () => {
       </Form.Select>
 
       <InputGroup className="mb-3">
-        <InputGroup.Text id="basic-addon1" style={{ flex: 1 }}>
+        <InputGroup.Text id="basic-addon1" style={{ flex: 1 }} >
           <FiMapPin />
           &nbsp;Pick up
         </InputGroup.Text>
@@ -73,6 +76,7 @@ const SliderForm = () => {
           isInvalid={!!formik.errors.pickUpPlace}
         />
       </InputGroup>
+      
 
       <InputGroup className="mb-3">
         <InputGroup.Text id="basic-addon1" style={{ flex: 1 }}>
@@ -128,10 +132,12 @@ const SliderForm = () => {
       <Button size="lg" className="w-100" type="submit">
         CONTINUE RESERVATION
       </Button>
+
       <CompleteReservationModal
         show={modalShow}
         onHide={() => setModalShow(false)}
       />
+
     </Form>
   );
 };
