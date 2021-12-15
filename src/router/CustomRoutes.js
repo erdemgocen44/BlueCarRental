@@ -8,13 +8,24 @@ import RegisterPage from "../pages/RegisterPage";
 import ServicesPage from "../pages/ServicesPage";
 import ProfilePage from "../pages/user/ProfilePage";
 import UserReservationsPage from "../pages/user/UserReservationsPage";
-import UserReservationsDetailPage from "../pages/user/UserReservationsDetailPage";
+import UserReservationsDetailPage from "../pages/user/UserReservationDetailPage";
 
 import PrivateRoute from "./PrivateRoute";
+import UsersPage from "../pages/admin/UsersPage";
 
 const CustomRoutes = () => {
   return (
     <Routes>
+      {/*ADMIN ROUTES */}
+      <Route
+        path="/admin/users"
+        element={
+          <PrivateRoute>
+            <UsersPage />
+          </PrivateRoute>
+        }
+      />
+      {/*CUSTOMER ROUTES */}
       <Route
         path="/reservations/:reservationId"
         element={
@@ -39,6 +50,7 @@ const CustomRoutes = () => {
           </PrivateRoute>
         }
       />
+      {/*VISITORS ROUTES */}
       <Route path="/contact" element={<ContactPage />} />
       <Route path="/about" element={<AboutPage />} />
       <Route path="/services" element={<ServicesPage />} />
