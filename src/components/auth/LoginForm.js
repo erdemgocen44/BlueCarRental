@@ -22,10 +22,9 @@ const LoginForm = () => {
   const navigate = useNavigate();
 
   const initialValues = {
-    email: "akifemre@gmail.com",
-    password: "12345",
+    email: "joann@gmail.com",
+    password: "123456",
   };
-
   const validationSchema = Yup.object({
     email: Yup.string().email().required("Please enter your email"),
     password: Yup.string().required("Please enter your password"),
