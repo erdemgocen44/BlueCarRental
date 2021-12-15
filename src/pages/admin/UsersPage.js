@@ -5,14 +5,15 @@ import PageHeader from "../../components/common/PageHeader";
 import Spacer from "../../components/common/Spacer";
 
 const UsersPage = () => {
+  
   return (
     <>
       <PageHeader title="User Management" />
       <Spacer />
       <Container>
-        <Users />
+          <Users/>
       </Container>
-      <Spacer />
+      <Spacer/>
     </>
   );
 };

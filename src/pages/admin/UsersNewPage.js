@@ -4,17 +4,15 @@ import UserNew from "../../components/admin/UserNew";
 import PageHeader from "../../components/common/PageHeader";
 import Spacer from "../../components/common/Spacer";
 
-const UserNewPage = () => {
+const UsersNewPage = () => {
   return (
     <>
       <PageHeader title="User Management" />
       <Spacer />
-      <Container>
-        <UserNew />
-      </Container>
+      <Container><UserNew/></Container>
       <Spacer />
     </>
   );
 };
 
-export default UserNewPage;
+export default UsersNewPage;

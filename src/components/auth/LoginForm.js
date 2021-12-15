@@ -25,6 +25,7 @@ const LoginForm = () => {
     email: "joann@gmail.com",
     password: "123456",
   };
+
   const validationSchema = Yup.object({
     email: Yup.string().email().required("Please enter your email"),
     password: Yup.string().required("Please enter your password"),
@@ -37,17 +38,18 @@ const LoginForm = () => {
       .then((respLogin) => {
         localStorage.setItem("token", respLogin.data.token);
 
-        getUser()
-          .then((respUser) => {
-            dispatchUser(loginSuccess(respUser.data));
-            navigate("/");
-            setLoading(false);
-          })
-          .catch((err) => {
-            toast(err.response.data.message);
-            setLoading(false);
-            dispatchUser(loginFailed());
-          });
+        getUser().then((respUser) => {
+          dispatchUser(loginSuccess(respUser.data));
+          navigate("/");
+          setLoading(false);
+        })
+        .catch(err=> {
+          toast(err.response.data.message);
+          setLoading(false);
+          dispatchUser(loginFailed());
+        })
+
+        
       })
       .catch((err) => {
         toast(err.response.data.message);

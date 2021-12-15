@@ -9,4 +9,10 @@ const getUsers = () => {
   });
 };
 
-export { getUsers };
+const createUser = (user) => {
+  return axios.post(`${API_URL}add`, user, {
+    headers: authHeader(),
+  });
+};
+
+export { getUsers, createUser };

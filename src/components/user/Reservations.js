@@ -9,17 +9,22 @@ const Reservations = () => {
   const [loading, setLoading] = useState(true);
   const [reservations, setReservations] = useState([]);
   const navigate = useNavigate();
+
   const showDetails = (id) => {
     navigate(`/reservations/${id}`);
-  };
+  }
+  
+
 
   useEffect(() => {
-    getReservations().then((resp) => {
+    getReservations().then(resp=>{
       setReservations(resp.data);
       setLoading(false);
-    });
-  }, []);
+    })
+   
+  }, [])
 
+  
   return (
     <Table striped bordered hover responsive>
       <thead>
@@ -34,29 +39,15 @@ const Reservations = () => {
       <tbody>
         {loading && (
           <tr>
-            <td colSpan={5}>
-              <Spinner animation="border" size="sm" /> Loading...
-            </td>
+            <td colSpan={5}><Spinner animation="border" size="sm"/> Loading...</td>
           </tr>
         )}
         {reservations.map((item, index) => (
-          <tr
-            key={index}
-            onClick={() => showDetails(item.id)}
-            style={{ cursor: "pointer" }}
-          >
+          <tr key={index} onClick={()=>showDetails(item.id)} style={{cursor:"pointer"}}>
             <td>{index + 1}</td>
             <td>{item.car.model}</td>
-            <td>
-              {item.pickUpLocation}
-              <br />
-              {moment(item.pickUpTime).format("lll")}
-            </td>
-            <td>
-              {item.dropOfLocation}
-              <br />
-              {moment(item.dropOfTime).format("lll")}
-            </td>
+            <td>{item.pickUpLocation}<br/>{moment(item.pickUpTime).format("lll")}</td>
+            <td>{item.dropOfLocation}<br/>{moment(item.dropOfTime).format("lll")}</td>
             <td>{item.status}</td>
           </tr>
         ))}

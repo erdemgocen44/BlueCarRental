@@ -21,20 +21,12 @@ const isVehicleAvaliable = (reservation) => {
 };
 
 const getReservations = () => {
-  return axios.get(`${API_URL}reservations/auth/all`, {
-    headers: authHeader(),
-  });
-};
+  return axios.get(`${API_URL}reservations/auth/all`, {headers: authHeader()});
+}
 
 const getReservation = (reservationId) => {
-  return axios.get(`${API_URL}reservations/${reservationId}/auth`, {
-    headers: authHeader(),
-  });
-};
+  return axios.get(`${API_URL}reservations/${reservationId}/auth`, {headers: authHeader()});
+}
 
-export {
-  createReservation,
-  isVehicleAvaliable,
-  getReservations,
-  getReservation,
-};
+
+export { createReservation, isVehicleAvaliable, getReservations, getReservation };

@@ -1,6 +1,5 @@
 import moment from "moment";
 import React, { useEffect, useState } from "react";
-
 import {
   Container,
   Image,
@@ -13,20 +12,19 @@ import {
 import { FiCheck, FiCrosshair, FiArrowLeft, FiX } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { getReservation } from "../../api/reservation-service";
+
 const Details = ({ reservationId }) => {
   const [loading, setLoading] = useState(true);
-
   const [reservation, setReservation] = useState({});
-
   const navigate = useNavigate();
 
   useEffect(() => {
-    setLoading(true);
     getReservation(reservationId).then((resp) => {
       setReservation(resp.data);
       setLoading(false);
     });
   }, []);
+
   return (
     <Container>
       {!loading && (
@@ -126,11 +124,7 @@ const Details = ({ reservationId }) => {
             </Accordion>
           </Col>
           <Col lg={2}>
-            <Button
-              variant="secondary"
-              className="w-100 mt-3"
-              onClick={() => navigate("/reservations")}
-            >
+            <Button variant="secondary"  className="w-100 mt-3" onClick={()=> navigate(-1)}>
               <FiArrowLeft /> Back to reservations
             </Button>
           </Col>
@@ -139,4 +133,5 @@ const Details = ({ reservationId }) => {
     </Container>
   );
 };
+
 export default Details;

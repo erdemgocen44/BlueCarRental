@@ -27,7 +27,6 @@ const UserNew = () => {
     email: "",
     address: "",
     zipCode: "",
-    username: "",
     password: "",
     roles: ["Customer"],
   };
@@ -35,7 +34,13 @@ const UserNew = () => {
   const validationSchema = Yup.object({
     firstName: Yup.string().required("Please enter first name"),
     lastName: Yup.string().required("Please enter last name"),
-    phoneNumber: Yup.string().required("Please enter phone number"),
+    phoneNumber: Yup.string()
+      .required("Please enter phone number")
+      .test(
+        "includes_",
+        "Please enter a valid phone number",
+        (value) => value && !value.includes("_")
+      ),
     email: Yup.string().email().required("Please enter email"),
     address: Yup.string().required("Please enter address"),
     zipCode: Yup.string().required("Please enter zip code"),
@@ -43,7 +48,21 @@ const UserNew = () => {
     roles: Yup.array().required("Please select a role"),
   });
 
-  const onSubmit = (values) => {};
+  const onSubmit = (values) => {
+      setLoading(true);
+
+      createUser(values).then(resp=>{
+          setLoading(false);
+          toast("User has been created successfully");
+          navigate("/admin/users");
+      })
+      .catch(err=>{
+          toast("An error occured");
+          console.log(err.response.data.message);
+          setLoading(false);
+      })
+
+  };
 
   const formik = useFormik({
     enableReinitialize: true,

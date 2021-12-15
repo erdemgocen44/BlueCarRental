@@ -7,6 +7,7 @@ import Details from "../../components/user/Details";
 
 const UserReservationDetailPage = () => {
   const { reservationId } = useParams();
+
   return (
     <>
       <PageHeader title="Reservation Detail" />
