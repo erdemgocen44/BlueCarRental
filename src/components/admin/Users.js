@@ -2,11 +2,20 @@ import React, { useState, useEffect } from "react";
 import { Table, Button, ButtonGroup, Spinner } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { getUsers } from "../../api/admin-user-service";
-
+import fileDownloader from "js-file-download";
 const Users = () => {
   const [loadingUsers, setLoadingUsers] = useState(true);
+  const [downloadingUsers, setDownloadingUsers] = useState(false);
   const [users, setUsers] = useState([]);
-    
+
+  const handleDownload = () => {
+    setDownloadingUsers(true);
+    downloadingUsers().then((resp) => {
+      console.log(resp.data);
+      fileDownloader(resp.data, "users.xls");
+      setDownloadingUsers(false);
+    });
+  };
 
   useEffect(() => {
     getUsers().then((resp) => {
@@ -18,8 +27,13 @@ const Users = () => {
   return (
     <>
       <ButtonGroup aria-label="Basic example">
-        <Button variant="primary" as={Link} to="/admin/users/new">New User</Button>
-        <Button variant="secondary">Download List</Button>
+        <Button variant="primary" as={Link} to="/admin/users/new">
+          New User
+        </Button>
+        <Button variant="secondary" disabled={downloadingUsers}>
+          {downloadingUsers && <Spinner animation="border" size="sm" />}{" "}
+          Download List
+        </Button>
       </ButtonGroup>
 
       <Table striped bordered hover responsive className="admin-list mt-3">
@@ -46,7 +60,7 @@ const Users = () => {
                 <td>{user.firstName}</td>
                 <td>{user.lastName}</td>
                 <td>{user.email}</td>
-                <td>{user.roles}</td>
+                <td>{user.roles.join(" ")}</td>
               </tr>
             ))
           )}

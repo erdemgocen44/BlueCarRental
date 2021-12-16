@@ -21,10 +21,10 @@ const LoginForm = () => {
   const { dispatchUser } = useStore();
   const navigate = useNavigate();
 
-  const initialValues = {
-    email: "joann@gmail.com",
-    password: "123456",
-  };
+ const initialValues = {
+   email: "admin@bluerentalcars.com",
+   password: "12345",
+ };
 
   const validationSchema = Yup.object({
     email: Yup.string().email().required("Please enter your email"),
