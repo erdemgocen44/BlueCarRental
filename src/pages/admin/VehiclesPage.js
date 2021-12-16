@@ -3,16 +3,19 @@ import { Container, Spinner } from "react-bootstrap";
 import Vehicles from "../../components/admin/Vehicles";
 import PageHeader from "../../components/common/PageHeader";
 import Spacer from "../../components/common/Spacer";
+
 const VehiclesPage = () => {
+  
   return (
     <>
       <PageHeader title="Vehicle Management" />
       <Spacer />
       <Container>
-        <Vehicles />
+          <Vehicles />
       </Container>
-      <Spacer />
+      <Spacer/>
     </>
   );
 };
+
 export default VehiclesPage;

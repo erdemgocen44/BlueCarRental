@@ -8,6 +8,7 @@ const getUsers = () => {
     headers: authHeader(),
   });
 };
+
 const getUserById = (userId) => {
   return axios.get(`${API_URL}user/${userId}/auth`, {
     headers: authHeader(),
@@ -42,11 +43,5 @@ const downloadUsers = () => {
     responseType: "arraybuffer",
   });
 };
-export {
-  getUsers,
-  createUser,
-  downloadUsers,
-  getUserById,
-  updateUser,
-  deleteUser,
-};
+
+export { getUsers, createUser, downloadUsers, getUserById, updateUser, deleteUser };

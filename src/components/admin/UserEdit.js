@@ -19,6 +19,7 @@ import {
 import MaskInput from "react-maskinput/lib";
 import alertify from "alertifyjs";
 import { useNavigate, useParams } from "react-router-dom";
+
 const UserEdit = () => {
   const [initialValues, setInitialValues] = useState({
     firstName: "",
@@ -32,10 +33,12 @@ const UserEdit = () => {
     roles: ["Customer"],
     builtIn: false,
   });
+
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const { userId } = useParams();
   const navigate = useNavigate();
+
   const validationSchema = Yup.object({
     firstName: Yup.string().required("Please enter your first name"),
     lastName: Yup.string().required("Please enter your last name"),
@@ -45,8 +48,10 @@ const UserEdit = () => {
     zipCode: Yup.string().required("Please enter your zip code"),
     roles: Yup.array().required("Please select a role"),
   });
+
   const onSubmit = (values) => {
     setSaving(true);
+
     updateUser(userId, values)
       .then((resp) => {
         setSaving(false);
@@ -58,18 +63,22 @@ const UserEdit = () => {
         console.log(err.response.data.message);
       });
   };
+
   const formik = useFormik({
     enableReinitialize: true,
     initialValues,
     validationSchema,
     onSubmit,
   });
+
   const handleDelete = () => {
     //userId nin boş olmadığı veya numeric olduğu kontrol edilse iyi olur.
+
     alertify.confirm(
       "Delete",
       "Are you sure want to delete?",
       () => {
+
         setDeleting(true);
         deleteUser(userId)
           .then((resp) => {
@@ -88,13 +97,16 @@ const UserEdit = () => {
       }
     );
   };
+
   useEffect(() => {
     //userId nin boş olmadığı veya numeric olduğu kontrol edilse iyi olur.
+
     getUserById(userId).then((resp) => {
       console.log(resp.data);
       setInitialValues(resp.data);
     });
   }, []);
+
   return (
     <Form noValidate onSubmit={formik.handleSubmit}>
       <Row>
@@ -110,6 +122,7 @@ const UserEdit = () => {
             {formik.errors.firstName}
           </Form.Control.Feedback>
         </Form.Group>
+
         <Form.Group as={Col} md={4} lg={3} className="mb-3">
           <Form.Label>Last Name</Form.Label>
           <Form.Control
@@ -122,6 +135,7 @@ const UserEdit = () => {
             {formik.errors.lastName}
           </Form.Control.Feedback>
         </Form.Group>
+
         <Form.Group as={Col} md={4} lg={3} className="mb-3">
           <Form.Label>Phone Number</Form.Label>
           <Form.Control
@@ -138,6 +152,7 @@ const UserEdit = () => {
             {formik.errors.phoneNumber}
           </Form.Control.Feedback>
         </Form.Group>
+
         <Form.Group as={Col} md={4} lg={3} className="mb-3">
           <Form.Label>Email</Form.Label>
           <Form.Control
@@ -147,6 +162,7 @@ const UserEdit = () => {
             disabled
           />
         </Form.Group>
+
         <Form.Group as={Col} md={4} lg={3} className="mb-3">
           <Form.Label>Address</Form.Label>
           <Form.Control
@@ -159,6 +175,7 @@ const UserEdit = () => {
             {formik.errors.address}
           </Form.Control.Feedback>
         </Form.Group>
+
         <Form.Group as={Col} md={4} lg={3} className="mb-3">
           <Form.Label>Zip Code</Form.Label>
           <Form.Control
@@ -171,6 +188,7 @@ const UserEdit = () => {
             {formik.errors.zipCode}
           </Form.Control.Feedback>
         </Form.Group>
+
         <Form.Group as={Col} md={4} lg={3} className="mb-3">
           <Form.Label>Password</Form.Label>
           <Form.Control
@@ -183,8 +201,10 @@ const UserEdit = () => {
             {formik.errors.password}
           </Form.Control.Feedback>
         </Form.Group>
+
         <Form.Group as={Col} md={4} lg={3} className="mb-3">
           <Form.Label>Roles</Form.Label>
+
           <div className="mb-3">
             <Form.Check
               inline

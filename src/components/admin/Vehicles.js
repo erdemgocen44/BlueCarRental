@@ -4,29 +4,33 @@ import { Table, Button, ButtonGroup, Spinner } from "react-bootstrap";
 import fileDownload from "js-file-download";
 import { getVehicles } from "../../api/vehicle-service";
 import { useNavigate } from "react-router-dom";
+
 const Vehicles = () => {
   const [downloadingVehicles, setDownloadingVehicles] = useState(false);
   const [loadingVehicles, setLoadingVehicles] = useState(true);
   const [vehicles, setVehicles] = useState([]);
 
-  const handleEditVehicle = () => {};
+  const handleNewVehicle = () => {};
 
   const handleDownloadVehicles = () => {
     setDownloadingVehicles(true);
-    downloadVehicles().then((resp) => {
+    downloadVehicles().then(resp=>{
       fileDownload(resp.data, "vehicles.xlsx");
       setDownloadingVehicles(false);
     });
   };
 
-  const handleNewVehicle = () => {};
+  const handleEditVehicle = () => {
+    
+  }
+
 
   useEffect(() => {
-    getVehicles().then((resp) => {
-      setVehicles(resp.data);
-      setLoadingVehicles(false);
-    });
-  }, []);
+   getVehicles().then(resp=>{
+    setVehicles(resp.data);
+    setLoadingVehicles(false);
+   })
+  }, [])
 
   return (
     <>
@@ -45,6 +49,7 @@ const Vehicles = () => {
           Download List
         </Button>
       </ButtonGroup>
+      
       <Table striped bordered hover responsive className="admin-list mt-3">
         <thead>
           <tr>
@@ -76,4 +81,5 @@ const Vehicles = () => {
     </>
   );
 };
+
 export default Vehicles;
