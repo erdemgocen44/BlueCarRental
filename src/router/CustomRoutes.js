@@ -14,7 +14,8 @@ import UserReservationDetailPage from "../pages/user/UserReservationDetailPage";
 import UserReservationsPage from "../pages/user/UserReservationsPage";
 import PrivateRoute from "./PrivateRoute";
 import UserEditPage from "../pages/admin/UserEditPage";
-
+import VehiclesPage from "../pages/admin/VehiclesPage";
+import VehiclesNewPage from "../pages/admin/VehiclesNewPage";
 const CustomRoutes = () => {
   return (
     <Routes>
@@ -24,6 +25,22 @@ const CustomRoutes = () => {
         element={
           <PrivateRoute admin={true}>
             <UsersPage />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/admin/vehicles/new"
+        element={
+          <PrivateRoute admin={true}>
+            <VehiclesNewPage />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/admin/vehicles"
+        element={
+          <PrivateRoute admin={true}>
+            <VehiclesPage />
           </PrivateRoute>
         }
       />
