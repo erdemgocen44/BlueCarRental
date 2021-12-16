@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Table, Button, ButtonGroup, Spinner } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getUsers } from "../../api/admin-user-service";
 import fileDownloader from "js-file-download";
 const Users = () => {
   const [loadingUsers, setLoadingUsers] = useState(true);
   const [downloadingUsers, setDownloadingUsers] = useState(false);
   const [users, setUsers] = useState([]);
-
+  const navigate = useNavigate;
   const handleDownload = () => {
     setDownloadingUsers(true);
     downloadingUsers().then((resp) => {
@@ -15,6 +15,10 @@ const Users = () => {
       fileDownloader(resp.data, "users.xls");
       setDownloadingUsers(false);
     });
+  };
+
+  const handleEdit = (userId) => {
+    navigate(`/admin/users/${userId}`);
   };
 
   useEffect(() => {
@@ -55,7 +59,11 @@ const Users = () => {
             </tr>
           ) : (
             users.map((user, index) => (
-              <tr key={index}>
+              <tr
+                key={index}
+                onClick={() => handleEdit(user.id)}
+                className="cursor-hand"
+              >
                 <td>{index + 1}</td>
                 <td>{user.firstName}</td>
                 <td>{user.lastName}</td>

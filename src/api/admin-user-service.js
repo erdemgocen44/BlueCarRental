@@ -8,12 +8,24 @@ const getUsers = () => {
     headers: authHeader(),
   });
 };
+const getUserById = (userId) => {
+  return axios.get(`${API_URL}user/${userId}/auth`, {
+    headers: authHeader(),
+  });
+};
 
 const createUser = (user) => {
   return axios.post(`${API_URL}add`, user, {
     headers: authHeader(),
   });
 };
+
+const updateUser = (user) => {
+  return axios.put(`${API_URL}user/${user.id}/auth`, user, {
+    headers: authHeader(),
+  });
+};
+
 const downloadUsers = () => {
   return axios.get(`${API_URL}excel/download/users`, {
     headers: {
@@ -24,4 +36,4 @@ const downloadUsers = () => {
     responseType: "arraybuffer",
   });
 };
-export { getUsers, createUser, downloadUsers };
+export { getUsers, createUser, downloadUsers, getUserById, updateUser };
