@@ -60,6 +60,23 @@ const VehicleEdit = () => {
     onSubmit,
   });
 
+ const handleImageChange = () => {
+   const file = fileImageRef.current.files[0];
+   if (!file) return;
+   formik.setFieldValue("image", file);
+
+   const reader = new FileReader();
+
+   reader.readAsDataURL(file);
+
+   reader.onloadend = (e) => {
+     setImageSrc(reader.result);
+   };
+ };
+ const handleSelectImage = () => {
+   fileImageRef.current.click();
+ };
+
   return (
     <Form noValidate onSubmit={formik.handleSubmit}>
       <Row>
