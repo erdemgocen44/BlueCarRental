@@ -9,11 +9,14 @@ const createVehicle = (vehicle, imageId) => {
   });
 };
 
+
 const deleteVehicle = (vehicleId) => {
   return axios.delete(`${API_URL}car/admin/${vehicleId}/auth`, {
     headers: authHeader(),
   });
 };
+
+
 
 const downloadVehicles = () => {
   return axios.get(`${API_URL}excel/download/cars`, {
@@ -35,4 +38,4 @@ const uploadVehicleImage = (file) => {
   });
 };
 
-export { downloadVehicles, createVehicle, uploadVehicleImage, deleteVehicle };
+export { downloadVehicles, uploadVehicleImage, createVehicle, deleteVehicle };

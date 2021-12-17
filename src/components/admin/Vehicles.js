@@ -3,7 +3,7 @@ import { downloadVehicles } from "../../api/admin-vehicle-service";
 import { Table, Button, ButtonGroup, Spinner } from "react-bootstrap";
 import fileDownload from "js-file-download";
 import { getVehicles } from "../../api/vehicle-service";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Vehicles = () => {
   const [downloadingVehicles, setDownloadingVehicles] = useState(false);
@@ -13,21 +13,23 @@ const Vehicles = () => {
 
   const handleDownloadVehicles = () => {
     setDownloadingVehicles(true);
-    downloadVehicles().then((resp) => {
+    downloadVehicles().then(resp=>{
       fileDownload(resp.data, "vehicles.xlsx");
       setDownloadingVehicles(false);
     });
   };
+
   const handleEditVehicle = (vehicleId) => {
     navigate(`/admin/vehicles/${vehicleId}`);
-  };
+  }
+
 
   useEffect(() => {
-    getVehicles().then((resp) => {
-      setVehicles(resp.data);
-      setLoadingVehicles(false);
-    });
-  }, []);
+   getVehicles().then(resp=>{
+    setVehicles(resp.data);
+    setLoadingVehicles(false);
+   })
+  }, [])
 
   return (
     <>
@@ -46,7 +48,7 @@ const Vehicles = () => {
           Download List
         </Button>
       </ButtonGroup>
-
+      
       <Table striped bordered hover responsive className="admin-list mt-3">
         <thead>
           <tr>
@@ -64,11 +66,7 @@ const Vehicles = () => {
             </tr>
           ) : (
             vehicles.map((vehicle, index) => (
-              <tr
-                key={index}
-                onClick={() => handleEditVehicle(vehicle.id)}
-                className="cursor-hand"
-              >
+              <tr key={index} onClick={() => handleEditVehicle(vehicle.id)} className="cursor-hand">
                 <td>{index + 1}</td>
                 <td>{vehicle.model}</td>
                 <td>{vehicle.transmission}</td>

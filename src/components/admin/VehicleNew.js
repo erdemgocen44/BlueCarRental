@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
+
 import {
   Form,
   Button,
@@ -16,13 +17,14 @@ import {
   createVehicle,
   uploadVehicleImage,
 } from "../../api/admin-vehicle-service";
-import { useStore } from "../../store";
 import { Link, useNavigate } from "react-router-dom";
+
 const VehicleNew = () => {
   const [loading, setLoading] = useState(false);
   const [imageSrc, setImageSrc] = useState("");
   const navigate = useNavigate();
   const fileImageRef = useRef();
+
   const initialValues = {
     model: "",
     doors: "",
@@ -35,6 +37,7 @@ const VehicleNew = () => {
     pricePerHour: "",
     image: "",
   };
+
   const validationSchema = Yup.object({
     model: Yup.string().required("Please enter the model"),
     doors: Yup.number().required("Please enter number of doors"),
@@ -49,8 +52,10 @@ const VehicleNew = () => {
     pricePerHour: Yup.number().required("Please enter price per hour"),
     image: Yup.mixed().required("Please select an image"),
   });
+
   const onSubmit = async (values) => {
     setLoading(true);
+
     try {
       const formData = new FormData();
       formData.append("file", values.image);
@@ -65,6 +70,7 @@ const VehicleNew = () => {
       const respVehicle = await createVehicle(values, imageId);
       if (respVehicle.status !== 201)
         throw "An error was occured while creating vehicle";
+
       setLoading(false);
       toast("Vehicle created successfully");
       navigate("/admin/vehicles");
@@ -73,25 +79,28 @@ const VehicleNew = () => {
       setLoading(false);
     }
   };
+
   const formik = useFormik({
     enableReinitialize: true,
     initialValues,
     validationSchema,
     onSubmit,
   });
+
   const handleImageChange = () => {
     const file = fileImageRef.current.files[0];
     if (!file) return;
+
     formik.setFieldValue("image", file);
 
     const reader = new FileReader();
-
     reader.readAsDataURL(file);
 
     reader.onloadend = (e) => {
       setImageSrc(reader.result);
     };
   };
+
   const handleSelectImage = () => {
     fileImageRef.current.click();
   };
@@ -120,6 +129,7 @@ const VehicleNew = () => {
             Select Image
           </Button>
         </Col>
+
         <Col lg={9}>
           <Row>
             <Form.Group as={Col} md={4} lg={3} className="mb-3">
@@ -133,6 +143,7 @@ const VehicleNew = () => {
                 {formik.errors.model}
               </Form.Control.Feedback>
             </Form.Group>
+
             <Form.Group as={Col} md={4} lg={3} className="mb-3">
               <Form.Label>Doors</Form.Label>
               <Form.Control
@@ -144,6 +155,7 @@ const VehicleNew = () => {
                 {formik.errors.doors}
               </Form.Control.Feedback>
             </Form.Group>
+
             <Form.Group as={Col} md={4} lg={3} className="mb-3">
               <Form.Label>Seats</Form.Label>
               <Form.Control
@@ -155,6 +167,7 @@ const VehicleNew = () => {
                 {formik.errors.seats}
               </Form.Control.Feedback>
             </Form.Group>
+
             <Form.Group as={Col} md={4} lg={3} className="mb-3">
               <Form.Label>Luggage</Form.Label>
               <Form.Control
@@ -166,6 +179,7 @@ const VehicleNew = () => {
                 {formik.errors.luggage}
               </Form.Control.Feedback>
             </Form.Group>
+
             <Form.Group as={Col} md={4} lg={3} className="mb-3">
               <Form.Label>Transmission</Form.Label>
               <Form.Select
@@ -177,10 +191,12 @@ const VehicleNew = () => {
                 <option value="Manuel">Manuel</option>
                 <option value="Tiptronic">Tiptronic</option>
               </Form.Select>
+
               <Form.Control.Feedback type="invalid">
                 {formik.errors.transmission}
               </Form.Control.Feedback>
             </Form.Group>
+
             <Form.Group as={Col} md={4} lg={3} className="mb-3">
               <Form.Label>Air Conditioning</Form.Label>
               <Form.Select
@@ -190,10 +206,12 @@ const VehicleNew = () => {
                 <option value={true}>Yes</option>
                 <option value={false}>No</option>
               </Form.Select>
+
               <Form.Control.Feedback type="invalid">
                 {formik.errors.airConditioning}
               </Form.Control.Feedback>
             </Form.Group>
+
             <Form.Group as={Col} md={4} lg={3} className="mb-3">
               <Form.Label>Fuel Type</Form.Label>
               <Form.Select
@@ -209,10 +227,12 @@ const VehicleNew = () => {
                 <option value="LPG">LPG</option>
                 <option value="CNG">CNG</option>
               </Form.Select>
+
               <Form.Control.Feedback type="invalid">
                 {formik.errors.fuelType}
               </Form.Control.Feedback>
             </Form.Group>
+
             <Form.Group as={Col} md={4} lg={3} className="mb-3">
               <Form.Label>Age</Form.Label>
               <Form.Control
@@ -224,6 +244,7 @@ const VehicleNew = () => {
                 {formik.errors.age}
               </Form.Control.Feedback>
             </Form.Group>
+
             <Form.Group as={Col} md={4} lg={3} className="mb-3">
               <Form.Label>Price per hour</Form.Label>
               <Form.Control
@@ -246,13 +267,7 @@ const VehicleNew = () => {
             )}{" "}
             Create
           </Button>
-          <Button
-            variant="secondary"
-            type="button"
-            variant="secondary"
-            as={Link}
-            to="/admin/vehicles"
-          >
+          <Button variant="secondary" type="button" variant="secondary" as={Link} to="/admin/vehicles">
             Cancel
           </Button>
         </ButtonGroup>
@@ -260,4 +275,5 @@ const VehicleNew = () => {
     </Form>
   );
 };
+
 export default VehicleNew;
