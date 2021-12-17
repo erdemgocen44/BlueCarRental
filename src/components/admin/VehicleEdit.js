@@ -19,7 +19,7 @@ import {
 } from "../../api/admin-vehicle-service";
 import alertify from "alertifyjs";
 import { useNavigate, useParams, Link } from "react-router-dom";
-import { getVehicle } from "../../api/vehicle-service";
+import { getVehicle, getVehicles } from "../../api/vehicle-service";
 const VehicleEdit = () => {
   const [loading, setLoading] = useState(false);
   const [deleting, setDeleting] = useState(false);
@@ -60,22 +60,50 @@ const VehicleEdit = () => {
     onSubmit,
   });
 
- const handleImageChange = () => {
-   const file = fileImageRef.current.files[0];
-   if (!file) return;
-   formik.setFieldValue("image", file);
+  const handleImageChange = () => {
+    const file = fileImageRef.current.files[0];
+    if (!file) return;
+    formik.setFieldValue("image", file);
 
-   const reader = new FileReader();
+    const reader = new FileReader();
 
-   reader.readAsDataURL(file);
+    reader.readAsDataURL(file);
 
-   reader.onloadend = (e) => {
-     setImageSrc(reader.result);
-   };
- };
- const handleSelectImage = () => {
-   fileImageRef.current.click();
- };
+    reader.onloadend = (e) => {
+      setImageSrc(reader.result);
+    };
+  };
+  const handleDelete = () => {
+    alertify.confirm(
+      "Delete",
+      "Are you sure want to delete?",
+      () => {
+        setDeleting(true);
+        deleteVehicle(vehicleId)
+          .then((resp) => {
+            toast("Vehicle was deleted successfully");
+            setDeleting(false);
+            navigate("/admin/vehicles");
+          })
+          .catch((err) => {
+            toast("An error occured");
+            setDeleting(false);
+          });
+      },
+      () => {}
+    );
+  };
+
+  useEffect(() => {
+    setLoading(true);
+    getVehicles(vehicleId).then((resp) => {
+      setInitialValues(resp.data);
+      setImageSrc(
+        `${process.env.REACT_APP_API_URL}files/display/${resp.data.image[0]}`
+      );
+      setLoading(false);
+    });
+  }, []);
 
   return (
     <Form noValidate onSubmit={formik.handleSubmit}>
@@ -227,7 +255,12 @@ const VehicleEdit = () => {
             )}{" "}
             Save
           </Button>
-          <Button type="button" variant="danger" disabled={deleting}>
+          <Button
+            type="button"
+            variant="danger"
+            disabled={deleting}
+            onClick={handleDelete}
+          >
             {deleting && (
               <Spinner animation="border" variant="light" size="sm" />
             )}{" "}
