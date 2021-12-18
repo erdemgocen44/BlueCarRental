@@ -3,6 +3,7 @@ import { Container } from "react-bootstrap";
 import ReservationEdit from "../../components/admin/ReservationEdit";
 import PageHeader from "../../components/common/PageHeader";
 import Spacer from "../../components/common/Spacer";
+
 const ReservationEditPage = () => {
   return (
     <>
@@ -14,4 +15,5 @@ const ReservationEditPage = () => {
     </>
   );
 };
+
 export default ReservationEditPage;

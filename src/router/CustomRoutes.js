@@ -24,95 +24,22 @@ const CustomRoutes = () => {
   return (
     <Routes>
       {/* ADMIN ROUTES */}
-      <Route
-        path="/admin/users"
-        element={
-          <PrivateRoute admin={true}>
-            <UsersPage />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/admin/users/new"
-        element={
-          <PrivateRoute admin={true}>
-            <UsersNewPage />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/admin/users/:userId"
-        element={
-          <PrivateRoute admin={true}>
-            <UserEditPage />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/admin/vehicles"
-        element={
-          <PrivateRoute admin={true}>
-            <VehiclesPage />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/admin/vehicles/new"
-        element={
-          <PrivateRoute admin={true}>
-            <VehiclesNewPage />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/admin/vehicles/:vehicleId"
-        element={
-          <PrivateRoute admin={true}>
-            <VehiclesEditPage />
-          </PrivateRoute>
-        }
-      />{" "}
-      <Route
-        path="/admin/reservations/:reservationId"
-        element={
-          <PrivateRoute admin={true}>
-            <ReservationEditPage />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/admin/reservations"
-        element={
-          <PrivateRoute admin={true}>
-            <ReservationsPage />
-          </PrivateRoute>
-        }
-      />
+      <Route path="/admin/users" element={<PrivateRoute admin={true}><UsersPage/></PrivateRoute>}/>
+      <Route path="/admin/users/new" element={<PrivateRoute admin={true}><UsersNewPage/></PrivateRoute>}/>
+      <Route path="/admin/users/:userId" element={<PrivateRoute admin={true}><UserEditPage/></PrivateRoute>}/>
+
+      <Route path="/admin/vehicles" element={<PrivateRoute admin={true}><VehiclesPage/></PrivateRoute>}/>
+      <Route path="/admin/vehicles/new" element={<PrivateRoute admin={true}><VehiclesNewPage/></PrivateRoute>}/>
+      <Route path="/admin/vehicles/:vehicleId" element={<PrivateRoute admin={true}><VehiclesEditPage/></PrivateRoute>}/>
+
+      <Route path="/admin/reservations" element={<PrivateRoute admin={true}><ReservationsPage/></PrivateRoute>}/>
+      <Route path="/admin/reservations/:reservationId" element={<PrivateRoute admin={true}><ReservationEditPage/></PrivateRoute>}/>
+
       {/* CUSTOMER ROUTES */}
-      <Route
-        path="/reservations/:reservationId"
-        element={
-          <PrivateRoute>
-            <UserReservationDetailPage />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/reservations"
-        element={
-          <PrivateRoute>
-            <UserReservationsPage />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/profile"
-        element={
-          <PrivateRoute>
-            <ProfilePage />
-          </PrivateRoute>
-        }
-      />
+      <Route path="/reservations/:reservationId" element={<PrivateRoute><UserReservationDetailPage/></PrivateRoute>}/>
+      <Route path="/reservations" element={<PrivateRoute><UserReservationsPage/></PrivateRoute>}/>
+      <Route path="/profile" element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
+      
       {/* VISITOR ROUTES */}
       <Route path="/not-authorized" element={<NotAuthorizedPage />} />
       <Route path="/contact" element={<ContactPage />} />

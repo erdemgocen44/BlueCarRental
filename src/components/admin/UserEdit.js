@@ -78,6 +78,7 @@ const UserEdit = () => {
       "Delete",
       "Are you sure want to delete?",
       () => {
+
         setDeleting(true);
         deleteUser(userId)
           .then((resp) => {
@@ -242,7 +243,7 @@ const UserEdit = () => {
             variant="secondary"
             type="button"
             variant="secondary"
-            onClick={() => navigate("/admin/users/-1")}
+            onClick={() => navigate(-1)}
           >
             Cancel
           </Button>

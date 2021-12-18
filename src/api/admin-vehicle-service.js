@@ -8,21 +8,21 @@ const createVehicle = (vehicle, imageId) => {
     headers: authHeader(),
   });
 };
-const updateVehicle = (vehicle, imageId, vehicleId) => {
-  return axios.put(
-    `${API_URL}car/admin/auth?id=${vehicleId}&imageId=${imageId}`,
-    vehicle,
-    {
-      headers: authHeader(),
-    }
-  );
-};
+
 
 const deleteVehicle = (vehicleId) => {
   return axios.delete(`${API_URL}car/admin/${vehicleId}/auth`, {
     headers: authHeader(),
   });
 };
+
+
+const updateVehicle = (vehicle, imageId, vehicleId) => {
+  return axios.put(`${API_URL}car/admin/auth?id=${vehicleId}&imageId=${imageId}`, vehicle, {
+    headers: authHeader(),
+  });
+};
+
 
 const downloadVehicles = () => {
   return axios.get(`${API_URL}excel/download/cars`, {
@@ -44,10 +44,4 @@ const uploadVehicleImage = (file) => {
   });
 };
 
-export {
-  downloadVehicles,
-  uploadVehicleImage,
-  createVehicle,
-  deleteVehicle,
-  updateVehicle,
-};
+export { downloadVehicles, uploadVehicleImage, createVehicle, deleteVehicle, updateVehicle };

@@ -2,16 +2,15 @@ import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { Table, ButtonGroup, Button, Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import {
-  downloadReservations,
-  getReservations,
-} from "../../api/admin-reservations-service";
+import { downloadReservations, getReservations } from "../../api/admin-reservation-service";
 import fileDownloader from "js-file-download";
+
 const Reservations = () => {
   const [reservations, setReservations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [downloading, setDownloading] = useState(false);
   const navigate = useNavigate();
+
   const handleDownloadReservations = () => {
     setDownloading(true);
     downloadReservations().then((resp) => {
@@ -19,15 +18,18 @@ const Reservations = () => {
       setDownloading(false);
     });
   };
+
   const showDetails = (reservationId) => {
     navigate(`/admin/reservations/${reservationId}`);
   };
+
   useEffect(() => {
     getReservations().then((resp) => {
       setReservations(resp.data);
       setLoading(false);
     });
   }, []);
+
   return (
     <>
       <ButtonGroup aria-label="Basic example">
@@ -42,6 +44,7 @@ const Reservations = () => {
           Download List
         </Button>
       </ButtonGroup>
+
       <Table striped bordered hover responsive>
         <thead>
           <tr>
@@ -60,11 +63,7 @@ const Reservations = () => {
             </tr>
           )}
           {reservations.map((item, index) => (
-            <tr
-              key={index}
-              onClick={() => showDetails(item.id)}
-              className="cursor-hand"
-            >
+            <tr key={index} onClick={() => showDetails(item.id)} className="cursor-hand">
               <td>{index + 1}</td>
               <td>{item.car.model}</td>
               <td>
@@ -86,4 +85,5 @@ const Reservations = () => {
     </>
   );
 };
+
 export default Reservations;

@@ -20,7 +20,9 @@ import alertify from "alertifyjs";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { getVehicles } from "../../api/vehicle-service";
 import moment from "moment";
+
 const statuses = ["CREATED", "CANCELED", "DONE"];
+
 const ReservationEdit = () => {
   const [initialValues, setInitialValues] = useState({
     pickUpLocation: "",
@@ -36,6 +38,7 @@ const ReservationEdit = () => {
   const [loading, setLoading] = useState(false);
   const { reservationId } = useParams();
   const navigate = useNavigate();
+
   const validationSchema = Yup.object({
     car: Yup.number().required("Select a car"),
     pickUpLocation: Yup.string().required("Enter the pick up place"),
@@ -46,36 +49,41 @@ const ReservationEdit = () => {
     dropOffTime: Yup.string().required("Select the drop off time"),
     status: Yup.string().required("Select a status"),
   });
+
   const onSubmit = (values) => {
     setLoading(true);
+
     const reservationDto = {
-      pickUpTime: moment(`${values.pickUpDate} ${values.pickUpTime}`).format(
-        "MM/DD/YYYY HH:mm:ss"
-      ),
-      dropOfTime: moment(`${values.dropOffDate} ${values.dropOffTime}`).format(
-        "MM/DD/YYYY HH:mm:ss"
-      ),
+      pickUpTime: moment(`${values.pickUpDate} ${values.pickUpTime}`).format("MM/DD/YYYY HH:mm:ss"),
+      dropOfTime: moment(`${values.dropOffDate} ${values.dropOffTime}`).format("MM/DD/YYYY HH:mm:ss"),
       pickUpLocation: values.pickUpLocation,
       dropOfLocation: values.dropOfLocation,
       status: values.status,
     };
-    updateReservation(reservationId, values.car, reservationDto)
-      .then((resp) => {
-        setLoading(false);
-        toast("The reservation was updated successfully");
-      })
-      .catch((err) => {
-        toast("An error occured while updating the reservation");
-        console.log(err.response.data.message);
-        setLoading(false);
-      });
+
+    updateReservation(reservationId, values.car, reservationDto).then(resp=>{
+      setLoading(false);
+      toast("The reservation was updated successfully");
+
+    })
+    .catch(err=>{
+      toast("An error occured while updating the reservation");
+      console.log(err.response.data.message);
+      setLoading(false);
+    })
+
+
+
+
   };
+
   const formik = useFormik({
     enableReinitialize: true,
     initialValues,
     validationSchema,
     onSubmit,
   });
+
   const handleDelete = () => {
     alertify.confirm(
       "Delete",
@@ -91,9 +99,11 @@ const ReservationEdit = () => {
       () => {}
     );
   };
+
   const loadReservation = () => {
     getReservation(reservationId).then((resp) => {
       console.log(resp.data);
+
       const {
         pickUpLocation,
         dropOfLocation,
@@ -103,6 +113,7 @@ const ReservationEdit = () => {
         car,
         userId,
       } = resp.data;
+
       const reservationDto = {
         pickUpLocation: pickUpLocation,
         dropOfLocation: dropOfLocation,
@@ -114,18 +125,22 @@ const ReservationEdit = () => {
         status: status,
         userId: userId,
       };
+
       setInitialValues(reservationDto);
     });
   };
+
   const loadVehicles = () => {
     getVehicles().then((resp) => {
       setVehicles(resp.data);
     });
   };
+
   useEffect(() => {
     loadVehicles();
     loadReservation();
   }, []);
+
   return (
     <Form noValidate onSubmit={formik.handleSubmit}>
       <Row>
@@ -142,6 +157,7 @@ const ReservationEdit = () => {
             {formik.errors.pickUpLocation}
           </Form.Control.Feedback>
         </Form.Group>
+
         <Form.Group as={Col} md={4} lg={3} className="mb-3">
           <Form.Label>Drop-Off Location</Form.Label>
           <Form.Control
@@ -154,6 +170,7 @@ const ReservationEdit = () => {
             {formik.errors.dropOfLocation}
           </Form.Control.Feedback>
         </Form.Group>
+
         <Form.Group as={Col} md={4} lg={3} className="mb-3">
           <Form.Label>Pick Up Time</Form.Label>
           <InputGroup className="mb-3">
@@ -172,6 +189,7 @@ const ReservationEdit = () => {
             {formik.errors.pickUpDate || formik.errors.pickUpTime}
           </Form.Control.Feedback>
         </Form.Group>
+
         <Form.Group as={Col} md={4} lg={3} className="mb-3">
           <Form.Label>Drop Off Time</Form.Label>
           <InputGroup className="mb-3">
@@ -190,6 +208,7 @@ const ReservationEdit = () => {
             {formik.errors.dropOffDate || formik.errors.dropOffTime}
           </Form.Control.Feedback>
         </Form.Group>
+
         <Form.Group as={Col} md={4} lg={3} className="mb-3">
           <Form.Label>Vehicle</Form.Label>
           <Form.Select
