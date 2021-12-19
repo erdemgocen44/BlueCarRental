@@ -261,7 +261,7 @@ const ReservationEdit = () => {
             variant="secondary"
             onClick={() => navigate("/admin/reservations")}
           >
-            Cancel
+            Cance
           </Button>
           <Button
             type="button"
