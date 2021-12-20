@@ -110,6 +110,7 @@ const SliderForm = () => {
           style={{ flex: 3 }}
           {...formik.getFieldProps("pickUpLocation")}
           isInvalid={!!formik.errors.pickUpLocation}
+          autoComplete="off"
         />
       </InputGroup>
 
@@ -123,6 +124,7 @@ const SliderForm = () => {
           style={{ flex: 3 }}
           {...formik.getFieldProps("dropOfLocation")}
           isInvalid={!!formik.errors.dropOfLocation}
+          autoComplete="off"
         />
       </InputGroup>
 
@@ -167,14 +169,15 @@ const SliderForm = () => {
       </InputGroup>
 
       <Button size="lg" className="w-100" type="submit" disabled={loading}>
-        {loading && <Spinner animation="border" size="sm"/> } CONTINUE RESERVATION
+        {loading && <Spinner animation="border" size="sm" />} CONTINUE
+        RESERVATION
       </Button>
 
       {modalShow && (
         <CompleteReservationModal
           show={modalShow}
           onHide={() => setModalShow(false)}
-          onReset={()=> formik.handleReset()}
+          onReset={() => formik.handleReset()}
         />
       )}
     </Form>
