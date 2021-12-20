@@ -65,6 +65,8 @@ body {
   margin: 0;
   padding: 1rem;
   list-style: none;
+  max-height: 20rem;
+  overflow-y: scroll;
 }
 
 .search-place li {
