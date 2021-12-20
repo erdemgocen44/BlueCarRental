@@ -29,7 +29,7 @@ const SearchPlace = (props) => {
       <InputGroup className="mb-3">
         <InputGroup.Text style={{ flex: 1 }}>
           <FiMapPin />
-          &nbsp;Pick up
+          &nbsp;{props.title}
         </InputGroup.Text>
         <FormControl
           {...props}
@@ -43,9 +43,9 @@ const SearchPlace = (props) => {
         {data.map((item) => (
           <li
             key={item.objectID}
-            onClick={() => {
+            onClick={() =>{
               props.onSelect(props.name, `${item.state} ${item.city}`);
-              setData([]);
+              setData([])
             }}
           >
             {item.state} {item.city}
