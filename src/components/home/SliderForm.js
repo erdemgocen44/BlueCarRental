@@ -1,11 +1,5 @@
-import React, { useState } from "react";
-import {
-  Form,
-  InputGroup,
-  FormControl,
-  Button,
-  Spinner,
-} from "react-bootstrap";
+import React,{useState} from "react";
+import { Form, InputGroup, FormControl, Button, Spinner } from "react-bootstrap";
 import { FiCalendar, FiMapPin } from "react-icons/fi";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -16,12 +10,14 @@ import { toast } from "react-toastify";
 import { isVehicleAvaliable } from "../../api/reservation-service";
 import moment from "moment";
 import SearchPlace from "../common/SearchPlace";
+
 const SliderForm = () => {
   const [loading, setLoading] = useState(false);
   const { dispatchReservation, vehiclesState, userState } = useStore();
   const { vehicles } = vehiclesState;
   const { isUserLogin } = userState;
   const [modalShow, setModalShow] = useState(false);
+
   const initialValues = {
     car: "",
     pickUpLocation: "",
@@ -30,8 +26,9 @@ const SliderForm = () => {
     pickUpTime: "",
     dropOffDate: "",
     dropOffTime: "",
-    totalPrice: 0,
+    totalPrice:0
   };
+
   const validationSchema = Yup.object({
     car: Yup.string().required("Select a car please."),
     pickUpLocation: Yup.string().required("Enter a pick up place please."),
@@ -41,12 +38,15 @@ const SliderForm = () => {
     dropOffDate: Yup.string().required("Select a drop off date please."),
     dropOffTime: Yup.string().required("Select a drop off time please."),
   });
+
   const onSubmit = (values) => {
     const { car, pickUpDate, pickUpTime, dropOffDate, dropOffTime } = values;
+
     if (!isUserLogin) {
       toast("Please first login");
       return;
     }
+
     // Aracın belirtilen tarih aralığında müsait olup olmadığı kontrol ediliyor
     const reservationDto = {
       vehicleId: car,
@@ -57,26 +57,34 @@ const SliderForm = () => {
         "MM/DD/YYYY HH:mm:ss"
       ),
     };
+
     setLoading(true);
     isVehicleAvaliable(reservationDto).then((resp) => {
       setLoading(false);
       const { isAvailable, totalPrice } = resp.data;
-      if (!isAvailable) {
-        toast(
-          "The car is not avaliable in these days. Please select another one."
-        );
+
+      if(!isAvailable){
+        toast("The car is not avaliable in these days. Please select another one.");
         return;
       }
+
       values.totalPrice = totalPrice;
+
       dispatchReservation(setReservationState(values));
+
       setModalShow(true);
+
     });
+
+    
   };
+
   const formik = useFormik({
     initialValues,
     validationSchema,
     onSubmit,
   });
+
   return (
     <Form noValidate onSubmit={formik.handleSubmit}>
       <Form.Select
@@ -92,7 +100,9 @@ const SliderForm = () => {
           </option>
         ))}
       </Form.Select>
-      <SearchPlace />
+
+      <SearchPlace/>
+
       <InputGroup className="mb-3">
         <InputGroup.Text id="basic-addon1" style={{ flex: 1 }}>
           <FiMapPin />
@@ -106,6 +116,7 @@ const SliderForm = () => {
           autoComplete="off"
         />
       </InputGroup>
+
       <InputGroup className="mb-3">
         <InputGroup.Text id="basic-addon1" style={{ flex: 1 }}>
           <FiCalendar />
@@ -125,6 +136,7 @@ const SliderForm = () => {
           isInvalid={!!formik.errors.pickUpTime}
         />
       </InputGroup>
+
       <InputGroup className="mb-3">
         <InputGroup.Text id="basic-addon1" style={{ flex: 1 }}>
           <FiCalendar />
@@ -144,18 +156,20 @@ const SliderForm = () => {
           isInvalid={!!formik.errors.dropOffTime}
         />
       </InputGroup>
+
       <Button size="lg" className="w-100" type="submit" disabled={loading}>
-        {loading && <Spinner animation="border" size="sm" />} CONTINUE
-        RESERVATION
+        {loading && <Spinner animation="border" size="sm"/> } CONTINUE RESERVATION
       </Button>
+
       {modalShow && (
         <CompleteReservationModal
           show={modalShow}
           onHide={() => setModalShow(false)}
-          onReset={() => formik.handleReset()}
+          onReset={()=> formik.handleReset()}
         />
       )}
     </Form>
   );
 };
+
 export default SliderForm;

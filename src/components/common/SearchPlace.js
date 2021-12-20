@@ -1,16 +1,12 @@
 import React, { useState } from "react";
-import { InputGroup, FormControl } from "react-bootstrap";
+import { FormControl, InputGroup } from "react-bootstrap";
 import { FiMapPin } from "react-icons/fi";
 import algoliasearch from "algoliasearch";
 
 const APP_ID = process.env.REACT_APP_ALGOLIA_APP_ID;
-const SEARCH_KEY = process.env.REACT_APP_ALGOLIA_APP_SEARCH_KEY;
+const SEARCH_KEY = process.env.REACT_APP_ALGOLIA_SEARCH_KEY;
 
-const algoliaClient = algoliasearch(
-  process.env.REACT_APP_ALGOLIA_APP_ID,
-  process.env.REACT_APP_ALGOLIA_APP_SEARCH_KEY
-);
-
+const algoliaClient = algoliasearch(APP_ID, SEARCH_KEY);
 const algoliaSearch = algoliaClient.initIndex("usa-states");
 
 const SearchPlace = () => {
@@ -18,13 +14,15 @@ const SearchPlace = () => {
 
   const handleSearch = (e) => {
     const { name, value } = e.target;
-    if (value.length <= 3) setData([]);
-    else {
+    if (value.length <= 3) {
+      setData([]);
+    } else {
       algoliaSearch.search(value).then((resp) => {
         setData(resp.hits);
       });
     }
   };
+
   return (
     <div className="search-place">
       <InputGroup className="mb-3">
@@ -43,7 +41,7 @@ const SearchPlace = () => {
       <ul className={data.length <= 0 ? "d-none" : ""}>
         {data.map((item) => (
           <li key={item.objectID}>
-            {item.state}, {item.city}
+            {item.state} {item.city}
           </li>
         ))}
       </ul>
